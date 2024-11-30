@@ -1,24 +1,13 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./styles/global.css"; // 글로벌 스타일
+import "./styles/variables.css"; // CSS 변수
+import MainPage from "./pages/MainPage";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div className="App">
+        <MainPage />
+      </div>
   );
 }
 
