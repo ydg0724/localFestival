@@ -1,8 +1,8 @@
 import React from "react";
 import Header from "../components/Header";
-import GoogleMap from "../components/GoogleMap";
 import FestivalList from "../components/FestivalList";
 import FestivalDetail from "../components/FestivalDetail";
+import MyGoogleMap from "../components/GoogleMap";
 
 const MainPage = () => {
     return (
@@ -16,7 +16,7 @@ const MainPage = () => {
             <div className="main-content">
                 {/* 좌측 지도 */}
                 <div className="map-container">
-                    <GoogleMap />
+                    <MyGoogleMap />
                 </div>
                 {/* 우측 축제 리스트 */}
                 <div className="list-container">
