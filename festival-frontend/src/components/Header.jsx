@@ -1,6 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+    const navigate = useNavigate();
+
     return (
         <div className="header">
             {/* 왼쪽: 제목 */}
@@ -10,7 +13,7 @@ const Header = () => {
 
             {/* 오른쪽: 버튼 */}
             <div className="header-right">
-                <button onClick={() => alert("로그인 또는 회원가입 페이지로 이동합니다.")}>
+                <button onClick={() => navigate("/login")}>
                     로그인/회원가입
                 </button>
             </div>

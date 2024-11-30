@@ -1,14 +1,22 @@
 import React from "react";
-import "./styles/global.css"; // 글로벌 스타일
-import "./styles/variables.css"; // CSS 변수
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MainPage from "./pages/MainPage";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 
 function App() {
-  return (
-      <div className="App">
-        <MainPage />
-      </div>
-  );
+    return (
+        <Router>
+            <Routes>
+                {/* 메인 페이지 */}
+                <Route path="/" element={<MainPage />} />
+                {/* 로그인 페이지 */}
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<RegisterPage />} />
+
+            </Routes>
+        </Router>
+    );
 }
 
 export default App;

@@ -69,3 +69,96 @@
     background-color: #f8f9fa;
     border: 2px solid purple; /* 외곽선 */
 }
+.login-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f2f5;
+}
+
+.project-title {
+    font-size: 50px;
+    font-weight: bold;
+    color: #fadb14;
+    margin-bottom: 40px;
+}
+
+.login-container {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 160px;
+}
+
+.input-field {
+    width: calc(100% - 20px);
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.login-button {
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0;
+    background-color: #fadb14;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.register-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f2f5;
+    padding-top: 40px;
+}
+
+.register-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.register-container {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+.input-field {
+    width: calc(100% - 20px);
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.register-button {
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0;
+    background-color: #fadb14;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+}
