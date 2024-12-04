@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+
+// React와 Spring boot 간의 요청이 다른 포트를 사용하므로 CORS 설정이 필요함
 @Configuration // Spring 설정 클래스
 public class CorsConfig {
 

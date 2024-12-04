@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController //RESTful 컨트롤러 선언
+@RestController //RESTful 컨트롤러 선언 (REST API 요청을 처리하는 컨트롤러)
 @RequestMapping("/api") //기본 API 경로를 /api로 설정
 public class UserController {
 
@@ -35,16 +35,22 @@ public class UserController {
     //로그인 API
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody users loginRequest, HttpSession session) {
-        //User 조회
+        //클라이언트로부터 받은 username으로 User 조회
         users users = userRepository.findByUsername(loginRequest.getUsername());
         if(users == null || !users.getPassword().equals(loginRequest.getPassword())){
             return ResponseEntity.badRequest().body("아이디 또는 비밀번호가 잘못되었습니다.");
         }
 
+        //로그인 성공 시 세션에 사용자 정보 저장 -> 로그인 유지
         session.setAttribute("user", users);
 
         return ResponseEntity.ok("로그인 성공");
+    }
 
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(HttpSession session) {
+        session.invalidate(); //세션 삭제
+        return ResponseEntity.ok("로그아웃 성공");
     }
 
 }
