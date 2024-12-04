@@ -15,7 +15,7 @@ const MyGoogleMap = () => {
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
-    googleMapsApiKey: "AIzaSyAlJw2gUTEf5kgAGMFFqFfcNM5gYl7mByM", // 환경 변수에서 API 키 가져오기
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY, // 환경 변수에서 API 키 가져오기
   });
 
   if (!isLoaded) {
