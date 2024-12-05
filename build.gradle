@@ -1,0 +1,45 @@
+plugins {
+	id 'java'
+	id 'war'
+	id 'org.springframework.boot' version '3.4.0'
+	id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'com.festival'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	runtimeOnly 'com.mysql:mysql-connector-j'
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
+	implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:2.0.0'
+	runtimeOnly 'org.glassfish.web:jakarta.servlet.jsp.jstl:2.0.0'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+sourceSets {
+	main {
+		resources {
+			srcDir 'src/main/webapp'
+		}
+	}
+}
