@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>여행어때:로그인</title>
+    <title>여행어때:회원가입</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -22,7 +22,7 @@
             font-size: 52px;
             color: #8181F7;
         }
-        .login-container {
+        .register-container {
             width: 400px;
             background-color: #ffffff;
             padding: 20px;
@@ -43,7 +43,7 @@
         }
         .form-group button {
             width: 98%;
-            padding: 10px;
+            padding: 15px;
             background-color: #8181F7;
             border: none;
             border-radius: 4px;
@@ -57,9 +57,12 @@
     </style>
 </head>
 <body>
-<h2>여행 어때</h2>
-<div class="login-container">
-    <form action="/login" method="post">
+<h2>회원가입</h2>
+<div class="register-container">
+    <form action="/register" method="post">
+        <div class="form-group">
+            <input type="text" id="name" name="name" placeholder="이름" required>
+        </div>
         <div class="form-group">
             <input type="text" id="id" name="id" placeholder="아이디" required>
         </div>
@@ -67,10 +70,7 @@
             <input type="password" id="password" name="password" placeholder="비밀번호" required>
         </div>
         <div class="form-group">
-            <button type="submit">로그인</button>
-        </div>
-        <div class="form-group">
-            <button type="button" onclick="location.href='/register'">회원가입</button>
+            <button type="submit">회원가입</button>
         </div>
     </form>
 </div>
