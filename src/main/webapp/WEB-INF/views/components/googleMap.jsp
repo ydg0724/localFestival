@@ -11,7 +11,7 @@
 <div id="map" class="map-container">
     <div id="google-map" style="width: 100%; height: 100%;"></div>
 </div>
-<script src="https://maps.googleapis.com/maps/api/js?key=YOUR-API-KEY&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=api_key&callback=initMap" async defer></script>
 <script>
 
     let map;
