@@ -7,6 +7,6 @@
 </head>
 <body>
 <h1>Welcome to Spring Boot with JSP!</h1>
-<p>test</p>
+<p>tes</p>
 </body>
 </html>

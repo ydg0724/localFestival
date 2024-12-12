@@ -29,11 +29,16 @@ dependencies {
 	implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:2.0.0'
 	runtimeOnly 'org.glassfish.web:jakarta.servlet.jsp.jstl:2.0.0'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	implementation 'io.github.cdimascio:dotenv-java:2.3.2'
 
 }
 
-tasks.named('test') {
-	useJUnitPlatform()
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
+
+tasks.withType(Test) {
+	systemProperty 'file.encoding', 'UTF-8'
 }
 
 sourceSets {
