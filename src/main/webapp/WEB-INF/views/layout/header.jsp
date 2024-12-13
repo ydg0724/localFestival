@@ -1,5 +1,6 @@
-<%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
+<%--<%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>--%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <style>
     .header {
@@ -39,10 +40,28 @@
         <h1><a href="<c:url value='/' />">축제어때</a></h1>
     </div>
 
-    <!-- 오른쪽: 로그인 버튼 -->
+    <%--<!-- 오른쪽: 로그인 버튼 -->
     <div class="header-right">
         <form action="<c:url value='/login' />" method="get">
             <button type="submit">로그인/회원가입</button>
         </form>
+    </div>--%>
+    <!-- 오른쪽: 로그인/로그아웃 버튼 -->
+    <div class="header-right">
+        <c:choose>
+            <%-- 로그인 상태라면 --%>
+            <c:when test="${not empty sessionScope.user}">
+                <form action="<c:url value='/logout' />" method="post">
+                    <button type="submit">로그아웃</button>
+                </form>
+            </c:when>
+            <%-- 비로그인 상태라면 --%>
+            <c:otherwise>
+                <form action="<c:url value='/login' />" method="get">
+                    <button type="submit">로그인/회원가입</button>
+                </form>
+            </c:otherwise>
+        </c:choose>
     </div>
+
 </div>

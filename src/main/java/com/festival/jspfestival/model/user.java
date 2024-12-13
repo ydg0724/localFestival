@@ -19,8 +19,6 @@ public class user {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
-    private String nickname;
 
     @Column
     private int routeId;
@@ -55,14 +53,6 @@ public class user {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
     }
 
     public int getRouteId() {

@@ -62,7 +62,7 @@
 <div class="login-container">
     <form action="/login" method="post">
         <div class="form-group">
-            <input type="text" id="id" name="id" placeholder="아이디" required>
+            <input type="text" id="username" name="username" placeholder="아이디" required>
         </div>
         <div class="form-group">
             <input type="password" id="password" name="password" placeholder="비밀번호" required>

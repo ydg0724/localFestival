@@ -56,6 +56,15 @@
             background-color: #5F5FBD;
         }
     </style>
+    <script>
+        <!-- 중복된 아이디 입력 시 에러 메시지 표시 -->
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('error') === 'true') {
+                alert('회원가입에 실패했습니다. 아이디가 중복되었거나 입력값이 잘못되었습니다.');
+            }
+        };
+    </script>
 </head>
 <body>
 <h2><a href="<c:url value='/' />">축제어때</a></h2>
@@ -65,7 +74,7 @@
             <input type="text" id="name" name="name" placeholder="이름" required>
         </div>
         <div class="form-group">
-            <input type="text" id="id" name="id" placeholder="아이디" required>
+            <input type="text" id="username" name="username" placeholder="아이디" required>
         </div>
         <div class="form-group">
             <input type="password" id="password" name="password" placeholder="비밀번호" required>
