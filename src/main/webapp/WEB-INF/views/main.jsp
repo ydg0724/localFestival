@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Festival Map</title>
+    <title>여행어때</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -41,7 +41,7 @@
 <%--<h1>Festival Map</h1>--%>
 <div id="main-map">
     <jsp:include page="/WEB-INF/views/components/googleMap.jsp">
-<%--        <jsp:param name="googleapikey" value="${googleMapsApiKey}"/>--%>
+    <jsp:param name="googleapikey" value="${googleMapsApiKey}"/>
     </jsp:include>
 
 </div>

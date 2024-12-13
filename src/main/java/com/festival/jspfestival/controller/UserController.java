@@ -19,5 +19,10 @@ public class UserController {
         return "login"; // login.jsp를 반환합니다.
     }
 
+    @GetMapping("/register")
+    public String showRegisterPage() {
+        return "register"; // "register.jsp"를 반환
+    }
+
 
 }
