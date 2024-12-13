@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>여행어때:로그인</title>
+    <title>축제어때:로그인</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -17,10 +17,11 @@
             height: 100vh;
             flex-direction: column;
         }
-        h2 {
+        h2 a{
             margin-bottom: 20px;
             font-size: 52px;
             color: #8181F7;
+            text-decoration: none;
         }
         .login-container {
             width: 400px;
@@ -52,12 +53,12 @@
             cursor: pointer;
         }
         .form-group button:hover {
-            background-color: #8181F7;
+            background-color: #5F5FBD;
         }
     </style>
 </head>
 <body>
-<h2>여행 어때</h2>
+<h2><a href="<c:url value='/' />">축제어때</a></h2>
 <div class="login-container">
     <form action="/login" method="post">
         <div class="form-group">

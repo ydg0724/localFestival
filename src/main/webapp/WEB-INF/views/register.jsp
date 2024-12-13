@@ -17,10 +17,11 @@
             height: 100vh;
             flex-direction: column;
         }
-        h2 {
+        h2 a {
             margin-bottom: 20px;
             font-size: 52px;
             color: #8181F7;
+            text-decoration: none;
         }
         .register-container {
             width: 400px;
@@ -52,12 +53,12 @@
             cursor: pointer;
         }
         .form-group button:hover {
-            background-color: #8181F7;
+            background-color: #5F5FBD;
         }
     </style>
 </head>
 <body>
-<h2>회원가입</h2>
+<h2><a href="<c:url value='/' />">축제어때</a></h2>
 <div class="register-container">
     <form action="/register" method="post">
         <div class="form-group">
