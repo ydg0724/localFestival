@@ -70,10 +70,22 @@
         <div class="form-group">
             <button type="submit">로그인</button>
         </div>
+
         <div class="form-group">
             <button type="button" onclick="location.href='/register'">회원가입</button>
         </div>
     </form>
+    <script>
+        // URL의 쿼리 파라미터에서 error 여부를 확인
+        const urlParams = new URLSearchParams(window.location.search);
+        const error = urlParams.get('error');
+
+        if (error) {
+            // 로그인 실패 시 alert 창 표시
+            alert("로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.");
+        }
+    </script>
+
 </div>
 </body>
 </html>
