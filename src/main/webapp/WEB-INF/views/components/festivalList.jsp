@@ -84,7 +84,15 @@
     <ul>
         <c:forEach var="festival" items="${festivals}">
             <li>
-                <img src="${festival.image1}" alt="${festival.title}">
+                <c:choose>
+                    <c:when test="${not empty festival.image1}">
+                        <img src="${festival.image1}" alt="${festival.title}">
+                    </c:when>
+                    <c:otherwise>
+                        <img src="${pageContext.request.contextPath}/images/default-image.jpeg">
+                    </c:otherwise>
+                </c:choose>
+                
                 <div class="item-info">
                     <p class="item-title">
                         <a href="javascript:void(0);"

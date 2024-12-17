@@ -12,6 +12,8 @@ import org.springframework.web.client.RestTemplate;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Service
 public class FestivalService {
@@ -21,18 +23,24 @@ public class FestivalService {
     private static final String TOUR_MAIN_API_URL = "http://apis.data.go.kr/B551011/KorService1/locationBasedList1";
     private static final String API_KEY = "";
 
+
     public List<Festival> fetchFestivals() {
         List<Festival> festivals = new ArrayList<>();
         try {
             RestTemplate restTemplate = new RestTemplate();
+
+            //현재 날짜
+            LocalDate currentDate = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+            String formattedDate = currentDate.format(formatter);
 
             // URI 생성
             URI url = new URI(FEST_MAIN_API_URL + "?serviceKey=" + API_KEY +
                     "&MobileApp=AppTest" +
                     "&MobileOS=ETC" +
                     "&pageNo=1" +
-                    "&numOfRows=10" +
-                    "&eventStartDate=20240901" +
+                    "&numOfRows=30" +
+                    "&eventStartDate=" + formattedDate + //현재 날짜 기준으로
                     "&listYN=Y" +
                     "&arrange=A" +
                     "&_type=json");

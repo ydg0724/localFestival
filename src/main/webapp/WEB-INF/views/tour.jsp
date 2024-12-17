@@ -24,17 +24,56 @@
             float: right;
             overflow-y: scroll;
             border: 1px solid #ddd;
+            border-radius: 8px;
             padding: 10px;
             box-sizing: border-box;
             background-color: #f9f9f9; /* 배경 색상으로 공간 표시 */
         }
         #tour-details {
-            clear: both;
-            padding-top: 20px;
+            display: none; /* 초기 숨김 */
+            background-color: #f9f9f9;
             border: 1px solid #ddd;
-            padding: 10px;
-            box-sizing: border-box;
-            background-color: #ffffff; /* 배경 색상으로 공간 표시 */
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            gap: 15px;
+            /*display: flex;*/
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        #tour-details img {
+            width: 300px;
+            height: auto;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        #tour-details .detail-info {
+            display: flex;
+            flex-direction: column; /* 정보 수직 배치 */
+            justify-content: center; /* 세로 중앙 정렬 */
+            gap: 10px; /* 각 정보 간 간격 */
+        }
+
+        .detail-title {
+            font-size: 22px; /* 제목 크기 */
+            font-weight: bold; /* 굵게 */
+            color: #5F5FBD; /* 제목 색상 */
+        }
+
+        #tour-details p {
+            margin: 0; /* 기본 여백 제거 */
+            font-size: 16px; /* 글자 크기 */
+            color: #333; /* 글자 색상 */
+        }
+
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
         }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -60,19 +99,19 @@
 
     <jsp:include page="/WEB-INF/views/components/tourList.jsp" />
 </div>
-<div id = tour-details>
-    <img id="tour-detail-img" src="" alt="이미지 없음" style="width: 200px; height: auto;">
-    <p><span id ="tour-detail-title"></span></p>
-    <p><span id ="tour-detail-tel"></span></p>
-    <p><span id ="tour-detail-contentid"></span></p>
-    <p><span id ="tour-detail-mapx"></span></p>
-    <p><span id ="tour-detail-mapy"></span></p>
-    <p><span id ="tour-detail-overview"></span></p>
-
-    <%--    <jsp:include page="/WEB-INF/views/components/festivalDetail.jsp" />--%>
-
+<div class="clearfix"></div>
+<div id="tour-details" style="display: none;">
+    <img id="tour-detail-img" src="" alt="이미지 없음">
+    <div class="detail-info">
+        <p class="detail-title" id="tour-detail-title"></p>
+        <p>전화번호: <span id="tour-detail-tel"></span></p>
+        <p style="display: none">위도: <span id="tour-detail-mapx"></span></p>
+        <p style="display: none">경도: <span id="tour-detail-mapy"></span></p>
+        <p>상세 설명: <span id="tour-detail-overview"></span></p>
+    </div>
 </div>
 
+<%--    <jsp:include page="/WEB-INF/views/components/festivalDetail.jsp" />--%>
 <script>
     function fetchTourDetail(contentId, image) {
         console.log("fetchTourDetail 실행");
@@ -115,7 +154,8 @@
                 $('#tour-detail-mapy').text(mapy);
                 $('#tour-detail-overview').text(overview);
 
-                $('#tour-detail-img').attr('src', image || 'default-image.jpg');// 이미지가 없을 경우 기본 이미지 설정
+                $('#tour-detail-img').attr('src', (image && image.trim() !== '') ? image : '${pageContext.request.contextPath}/images/default-image.jpeg');
+                // 이미지가 없을 경우 기본 이미지 설정
                 // if (response.contentId) {
                 //     $('#go-to-tour').css('display', 'inline-block'); // 버튼 보이기
                 // }
@@ -125,6 +165,7 @@
                 <%--    <p><b>전화번호:</b> ${tel}</p>--%>
                 <%--    <p><b>ID:</b> ${contentId}</p>--%>
                 <%--`);--%>
+                $('#tour-details').css('display', 'flex');
 
             },
             error: function() {

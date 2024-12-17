@@ -85,7 +85,15 @@
         <c:forEach var="tour" items="${tours}">
             <li>
                 <!-- 이미지 -->
-                <img src="${tour.firstImage}" alt="${tour.title}">
+                <c:choose>
+                    <c:when test="${not empty tour.firstImage}">
+                        <img src="${tour.firstImage}" alt="${tour.title}">
+                    </c:when>
+                    <c:otherwise>
+                        <img src="${pageContext.request.contextPath}/images/default-image.jpeg" alt="기본 이미지">
+                    </c:otherwise>
+                </c:choose>
+
                 <!-- 관광지 정보 -->
                 <div class="item-info">
                     <p class="item-title">
