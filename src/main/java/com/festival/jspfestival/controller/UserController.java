@@ -18,12 +18,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    @RequestMapping("/")
-    public String mainPage() {
-        return "main";
-    }
-
-
     //로그인 페이지 이동
     @GetMapping("/login")
     public String showLoginPage() {
@@ -37,7 +31,7 @@ public class UserController {
         user loginUser = userService.login(username,password);
         if(loginUser != null){
             session.setAttribute("user", loginUser); //세션에 사용자 정보 저장
-            return "redirect:/main"; //메인페이지로 이동
+            return "redirect:/"; //메인페이지로 이동
         } else{
             return "redirect:/login?error=true"; //로그인 실패 시
         }
@@ -46,7 +40,7 @@ public class UserController {
     @PostMapping("/logout")
     public String logout(HttpSession session){
         session.invalidate();   //세션 종료
-        return "redirect:/main"; //메인 페이지로 이동
+        return "redirect:/"; //메인 페이지로 이동
     }
 
     //회원가입 페이지

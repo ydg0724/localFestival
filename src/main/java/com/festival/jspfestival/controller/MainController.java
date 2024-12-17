@@ -26,7 +26,7 @@ public class MainController {
 
     private final FestivalService festivalService;
 
-    @RequestMapping("/main")
+    @RequestMapping("/")
     public String mainPage(Model model) {
 
         List<Festival> festivals = festivalService.fetchFestivals();
