@@ -50,13 +50,13 @@
 
 </div>
 <div id="tour-list">
-    <%--    <h2>Tour 리스트</h2>--%>
-    <%--    <c:forEach var="tour" items="${tours}">--%>
-    <%--        <p>Title: ${tour.title}</p>--%>
-    <%--        <p>MapX: ${tour.mapX}</p>--%>
-    <%--        <p>MapY: ${tour.mapY}</p>--%>
-    <%--        <hr>--%>
-    <%--    </c:forEach>--%>
+<%--    <h2>Tour 리스트</h2>--%>
+<%--    <c:forEach var="tour" items="${tours}">--%>
+<%--        <p>Title: ${tour.title}</p>--%>
+<%--        <p>MapX: ${tour.mapX}</p>--%>
+<%--        <p>MapY: ${tour.mapY}</p>--%>
+<%--        <hr>--%>
+<%--    </c:forEach>--%>
 
     <jsp:include page="/WEB-INF/views/components/tourList.jsp" />
 </div>

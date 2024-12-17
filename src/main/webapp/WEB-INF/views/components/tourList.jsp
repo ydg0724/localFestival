@@ -1,20 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="festival-list-container">
-    <h3>축제 목록</h3>
+<div class="tour-list-container">
+    <h3>관광지</h3>
     <div class="list-wrapper">
         <ul>
-            <c:forEach var="festival" items="${festivals}">
+            <c:forEach var="tour" items="${tours}">
                 <li>
                     <h2>
-                        <a href="javascript:void(0);" onclick="fetchDetail('${festival.contentId}','${festival.addr}','${festival.image1}')">
-                                ${festival.title}
+                        <a href="javascript:void(0);" onclick="fetchTourDetail('${tour.contentId}','${tour.firstImage}')">
+                                ${tour.title}
                         </a>
                     </h2>
                         <%--                <p>Start Date: ${festival.eventStartDate}</p>--%>
                         <%--                <p>End Date: ${festival.eventEndDate}</p>--%>
                         <%--                <p>Address: ${festival.addr}</p>--%>
-                    <img src="${festival.image1}" alt="${festival.title}" style="max-width: 200px;">
+                    <img src="${tour.firstImage}" alt="${tour.title}" style="max-width: 200px;">
                         <%--                <p>Phone: ${festival.tel}</p>--%>
                         <%--                <p>Map Coordinates: (${festival.mapX}, ${festival.mapY})</p>--%>
                 </li>

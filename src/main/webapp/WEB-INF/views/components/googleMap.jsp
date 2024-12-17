@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <style>
-    #google-map-container {
+    #map {
         width: 100%;
         height: 100%;
         position: relative;
@@ -11,7 +11,8 @@
 <div id="map" class="map-container">
     <div id="google-map" style="width: 100%; height: 100%;"></div>
 </div>
-<script src="https://maps.googleapis.com/maps/api/js?key=api_key&callback=initMap" async defer></script>
+
+
 <script>
 
     let map;
@@ -37,3 +38,4 @@
         // }
     }
 </script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwKEshFDIMTTqND-N4NVT4Wxy76o1dE08&callback=initMap" async defer></script>
