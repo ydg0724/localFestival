@@ -10,6 +10,8 @@
         padding: 10px 20px;
         background-color: #f0f0f0;
         border-bottom: 1px solid #ddd;
+        border-radius: 8px;
+        margin-bottom: 10px;
     }
 
     .header-left a {

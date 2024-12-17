@@ -15,6 +15,7 @@
             width: 70%;
             float: left;
             background-color: #e0e0e0; /* 배경 색상으로 공간 표시 */
+
         }
         #festival-list {
             height: 700px;
@@ -22,17 +23,76 @@
             float: right;
             overflow-y: scroll;
             border: 1px solid #ddd;
+            border-radius: 8px;
             padding: 10px;
             box-sizing: border-box;
             background-color: #f9f9f9; /* 배경 색상으로 공간 표시 */
         }
         #festival-details {
-            clear: both;
-            padding-top: 20px;
-            border: 1px solid #ddd;
+            display: none;
+            background-color: #f9f9f9; /* 배경 색상 */
+            border: 1px solid #ddd; /* 테두리 */
+            border-radius: 8px; /* 모서리 둥글게 */
+            padding: 20px; /* 내부 여백 */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+            margin-top: 20px; /* 위 여백 */
+            /*display: flex; /* 이미지와 정보 배치를 위해 flex 사용 */
+            gap: 15px; /* 요소 간 간격 */
+            flex-direction: row;
+
+        }
+
+        #festival-details img {
+            width: 300px; /* 이미지 너비 */
+            height: auto; /* 비율 유지 */
+            object-fit: cover; /* 이미지 잘림 방지 */
+            border-radius: 8px; /* 이미지 모서리 둥글게 */
+        }
+
+        #festival-details .detail-info {
+            display: flex;
+            flex-direction: column; /* 정보 수직 배치 */
+            justify-content: center; /* 세로 중앙 정렬 */
+            gap: 10px; /* 각 정보 간 간격 */
+        }
+
+        #festival-details .detail-info p {
+            margin: 0; /* 기본 여백 제거 */
+            font-size: 16px; /* 글자 크기 */
+            color: #333; /* 글자 색상 */
+        }
+
+        #festival-details .detail-title {
+            font-size: 22px; /* 제목 크기 */
+            font-weight: bold; /* 굵게 */
+            color: #5F5FBD; /* 제목 색상 */
+        }
+
+        #festival-details button {
+            width: 150px;
             padding: 10px;
-            box-sizing: border-box;
-            background-color: #ffffff; /* 배경 색상으로 공간 표시 */
+            background-color: #8181F7; /* 버튼 색상 */
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        #festival-details .button-container{
+            display: flex;
+            justify-content: flex-end; /* 버튼을 오른쪽 끝으로 이동 */
+            margin-top: 10px; /* 위의 내용과 간격 조정 */
+        }
+
+        #festival-details button:hover {
+            background-color: #5F5FBD; /* 버튼 hover 효과 */
+        }
+
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
         }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -50,6 +110,7 @@
 <div id="festival-list">
     <jsp:include page="/WEB-INF/views/components/festivalList.jsp" />
 </div>
+<div class="clearfix"></div>
 <form if = "tourform" action="/tour" method="post">
     <input type="hidden" id="inputContentId" name="contentId">
     <input type="hidden" id="inputTitle" name="title">
@@ -57,21 +118,22 @@
     <input type="hidden" id="inputMapx" name="mapx">
     <input type="hidden" id="inputMapy" name="mapy">
     <input type="hidden" id="inputOverview" name="overview">
-    <div id = festival-details>
-        <img id="detail-img" src="" alt="이미지 없음" style="width: 200px; height: auto;">
-        <p><span id ="detail-title"></span></p>
-        <p><span id ="detail-tel"></span></p>
-        <p><span id ="detail-contentid"></span></p>
-        <p><span id ="detail-mapx"></span></p>
-        <p><span id ="detail-mapy"></span></p>
-        <p><span id ="detail-overview"></span></p>
-
-        <button type="submit" id="go-to-tour" style="display: none;" onclick="navigateToTour()">Tour 페이지로 이동</button>
-
-        <%--    <jsp:include page="/WEB-INF/views/components/festivalDetail.jsp" />--%>
-
+    <div id="festival-details">
+        <img id="detail-img" src="" alt="이미지 없음">
+        <div class="detail-info">
+            <p class="detail-title" id="detail-title"></p>
+            <p>전화번호: <span id="detail-tel"></span></p>
+            <p style="display: none"><span id ="detail-contentid"></span></p>
+            <p style="display: none"><span id ="detail-mapx"></span></p>
+            <p style="display: none"><span id ="detail-mapy"></span></p>
+            <p>상세 설명: <span id="detail-overview"></span></p>
+            <div class="button-container">
+                <button type="submit" id="go-to-tour" onclick="navigateToTour()">관광지 선택으로 이동</button>
+            </div>
+        </div>
     </div>
 
+<%--    <jsp:include page="/WEB-INF/views/components/festivalDetail.jsp" />--%>
 </form>
 
 <script>
@@ -121,9 +183,10 @@
                 $('#detail-overview').text(overview);
 
                 $('#detail-img').attr('src', image || 'default-image.jpg');// 이미지가 없을 경우 기본 이미지 설정
-                if (response.contentId) {
-                    $('#go-to-tour').css('display', 'inline-block'); // 버튼 보이기
-                }
+
+                $('#festival-details').css('display', 'flex');
+
+                $('#go-to-tour').css('display', 'inline-block');
                 // 상세 정보 업데이트
                 <%--$('#festival-details').html(`--%>
                 <%--    <h2>${title}</h2>--%>
