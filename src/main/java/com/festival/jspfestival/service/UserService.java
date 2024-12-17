@@ -36,5 +36,9 @@ public class UserService {
                 .findFirst();
         return optionalUser.orElse(null);
     }
+
+    public user findById(int id) {
+        return userRepository.findById(id).orElse(null);
+    }
 }
 
