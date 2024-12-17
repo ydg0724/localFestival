@@ -141,7 +141,7 @@
 
     <!-- AJAX 스크립트 -->
     function fetchDetail(contentId,addr, image) {
-        console.log("fetchDetail 실행");
+        // console.log("fetchDetail 실행");
         $.ajax({
             url: "/fetchDetail",
             type: "GET",
@@ -152,7 +152,7 @@
                 addr: addr
             },
             success: function(response) {
-                console.log("AJAX 응답 데이터:", response);
+                // console.log("AJAX 응답 데이터:", response);
 
                 // 문자열일 경우 JSON 파싱
                 if (typeof response === "string") {
@@ -169,11 +169,11 @@
                 const mapx = response.mapx;
                 const mapy = response.mapy;
                 const overview = response.overview;
-                console.log("AJAX 응답 데이터 title :", title);
-                console.log("AJAX 응답 데이터 tel :", tel);
-                console.log("AJAX 응답 데이터 contentId :", contentId);
-                console.log("mapx:", mapx); // 값 확인
-                console.log("mapy:", mapy); // 값 확인
+                // console.log("AJAX 응답 데이터 title :", title);
+                // console.log("AJAX 응답 데이터 tel :", tel);
+                // console.log("AJAX 응답 데이터 contentId :", contentId);
+                // console.log("mapx:", mapx); // 값 확인
+                // console.log("mapy:", mapy); // 값 확인
 
                 $('#detail-contentid').text(contentId);
                 $('#detail-title').text(title);
@@ -217,17 +217,11 @@
         document.getElementById("inputMapy").value = $('#detail-mapy').text();
         document.getElementById("inputOverview").value = $('#detail-overview').text();
 
-        console.log("mapx:", mapx); // 값 확인
-        console.log("mapy:", mapy); // 값 확인
 
         document.getElementById("tourForm").submit();
     }
 
 
-    // 공통 JavaScript 함수
-    function showFestivalDetails(festivalId) {
-        // 축제 상세 정보 로드 및 표시 로직
-    }
 </script>
 
 </body>

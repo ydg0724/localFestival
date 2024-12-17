@@ -110,17 +110,19 @@
 </div>
 
 <script>
-    // function selectFestival(element) {
-    //     // 선택된 축제의 위치 정보 추출
-    //     const lat = parseFloat(element.getAttribute('data-lat'));
-    //     const lng = parseFloat(element.getAttribute('data-lng'));
-    //     const name = element.getAttribute('data-name');
-    //
-    //     // 구글맵 함수 호출 (맵 컴포넌트로 데이터 전송)
-    //     updateMapLocation(lat, lng, name);
-    //
-    //     // 상세 정보 업데이트
-    //     updateFestivalDetails(element);
-    // }
+    function selectFestival(element) {
+        // 선택된 축제의 위치 정보 추출
+        const lat = parseFloat(element.getAttribute('data-lat'));
+        const lng = parseFloat(element.getAttribute('data-lng'));
+        const name = element.getAttribute('data-name');
+        console.log("DEBUG - selectFestival 함수 호출됨");
+        console.log("위도(lat):", lat);
+        console.log("경도(lng):", lng);
+        console.log("축제 이름(title):", name);
+
+        // 구글맵 함수 호출 (맵 컴포넌트로 데이터 전송)
+        updateMapLocation(lat, lng, name);
+
+    }
 </script>
 
