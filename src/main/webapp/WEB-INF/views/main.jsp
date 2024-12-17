@@ -1,10 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Tour Map</title>
+    <title>Festival Map</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -18,7 +16,7 @@
             float: left;
             background-color: #e0e0e0; /* 배경 색상으로 공간 표시 */
         }
-        #tour-list {
+        #festival-list {
             height: 700px;
             width: 28%;
             float: right;
@@ -28,7 +26,7 @@
             box-sizing: border-box;
             background-color: #f9f9f9; /* 배경 색상으로 공간 표시 */
         }
-        #tour-details {
+        #festival-details {
             clear: both;
             padding-top: 20px;
             border: 1px solid #ddd;
@@ -49,40 +47,47 @@
     </jsp:include>
 
 </div>
-<div id="tour-list">
-    <%--    <h2>Tour 리스트</h2>--%>
-    <%--    <c:forEach var="tour" items="${tours}">--%>
-    <%--        <p>Title: ${tour.title}</p>--%>
-    <%--        <p>MapX: ${tour.mapX}</p>--%>
-    <%--        <p>MapY: ${tour.mapY}</p>--%>
-    <%--        <hr>--%>
-    <%--    </c:forEach>--%>
-
-    <jsp:include page="/WEB-INF/views/components/tourList.jsp" />
+<div id="festival-list">
+    <jsp:include page="/WEB-INF/views/components/festivalList.jsp" />
 </div>
-<div id = tour-details>
-    <img id="tour-detail-img" src="" alt="이미지 없음" style="width: 200px; height: auto;">
-    <p><span id ="tour-detail-title"></span></p>
-    <p><span id ="tour-detail-tel"></span></p>
-    <p><span id ="tour-detail-contentid"></span></p>
-    <p><span id ="tour-detail-mapx"></span></p>
-    <p><span id ="tour-detail-mapy"></span></p>
-    <p><span id ="tour-detail-overview"></span></p>
+<form if = "tourform" action="/tour" method="post">
+    <input type="hidden" id="inputContentId" name="contentId">
+    <input type="hidden" id="inputTitle" name="title">
+    <input type="hidden" id="inputTel" name="tel">
+    <input type="hidden" id="inputMapx" name="mapx">
+    <input type="hidden" id="inputMapy" name="mapy">
+    <input type="hidden" id="inputOverview" name="overview">
+    <div id = festival-details>
+        <img id="detail-img" src="" alt="이미지 없음" style="width: 200px; height: auto;">
+        <p><span id ="detail-title"></span></p>
+        <p><span id ="detail-tel"></span></p>
+        <p><span id ="detail-contentid"></span></p>
+        <p><span id ="detail-mapx"></span></p>
+        <p><span id ="detail-mapy"></span></p>
+        <p><span id ="detail-overview"></span></p>
 
-    <%--    <jsp:include page="/WEB-INF/views/components/festivalDetail.jsp" />--%>
+        <button type="submit" id="go-to-tour" style="display: none;" onclick="navigateToTour()">Tour 페이지로 이동</button>
 
-</div>
+        <%--    <jsp:include page="/WEB-INF/views/components/festivalDetail.jsp" />--%>
+
+    </div>
+
+</form>
 
 <script>
-    function fetchTourDetail(contentId, image) {
-        console.log("fetchTourDetail 실행");
+    let currentFestivalData = {}; // 전역 변수 선언
+
+    <!-- AJAX 스크립트 -->
+    function fetchDetail(contentId,addr, image) {
+        console.log("fetchDetail 실행");
         $.ajax({
-            url: "/fetchTourDetail",
+            url: "/fetchDetail",
             type: "GET",
             cache: false, // 캐시 비활성화
             data: {
                 contentId: contentId,
                 image: image,
+                addr: addr
             },
             success: function(response) {
                 console.log("AJAX 응답 데이터:", response);
@@ -102,23 +107,23 @@
                 const mapx = response.mapx;
                 const mapy = response.mapy;
                 const overview = response.overview;
-                console.log("AJAX tour응답 데이터 title :", title);
-                console.log("AJAX tour응답 데이터 tel :", tel);
-                console.log("AJAX tour응답 데이터 contentId :", contentId);
+                console.log("AJAX 응답 데이터 title :", title);
+                console.log("AJAX 응답 데이터 tel :", tel);
+                console.log("AJAX 응답 데이터 contentId :", contentId);
                 console.log("mapx:", mapx); // 값 확인
                 console.log("mapy:", mapy); // 값 확인
 
-                $('#tour-detail-contentid').text(contentId);
-                $('#tour-detail-title').text(title);
-                $('#tour-detail-tel').text(tel);
-                $('#tour-detail-mapx').text(mapx);
-                $('#tour-detail-mapy').text(mapy);
-                $('#tour-detail-overview').text(overview);
+                $('#detail-contentid').text(contentId);
+                $('#detail-title').text(title);
+                $('#detail-tel').text(tel);
+                $('#detail-mapx').text(mapx);
+                $('#detail-mapy').text(mapy);
+                $('#detail-overview').text(overview);
 
-                $('#tour-detail-img').attr('src', image || 'default-image.jpg');// 이미지가 없을 경우 기본 이미지 설정
-                // if (response.contentId) {
-                //     $('#go-to-tour').css('display', 'inline-block'); // 버튼 보이기
-                // }
+                $('#detail-img').attr('src', image || 'default-image.jpg');// 이미지가 없을 경우 기본 이미지 설정
+                if (response.contentId) {
+                    $('#go-to-tour').css('display', 'inline-block'); // 버튼 보이기
+                }
                 // 상세 정보 업데이트
                 <%--$('#festival-details').html(`--%>
                 <%--    <h2>${title}</h2>--%>
@@ -132,8 +137,28 @@
             }
         });
     }
+    function navigateToTour() {
+        // 데이터를 수집
+        const contentId = $('#detail-contentid').text();
+        const title = $('#detail-title').text();
+        const tel = $('#detail-tel').text();
+        const mapx = $('#detail-mapx').text();
+        const mapy = $('#detail-mapy').text();
+        const overview = $('#detail-overview').text();
 
+        // POST 요청 전송
+        document.getElementById("inputContentId").value = $('#detail-contentid').text();
+        document.getElementById("inputTitle").value = $('#detail-title').text();
+        document.getElementById("inputTel").value = $('#detail-tel').text();
+        document.getElementById("inputMapx").value = $('#detail-mapx').text();
+        document.getElementById("inputMapy").value = $('#detail-mapy').text();
+        document.getElementById("inputOverview").value = $('#detail-overview').text();
 
+        console.log("mapx:", mapx); // 값 확인
+        console.log("mapy:", mapy); // 값 확인
+
+        document.getElementById("tourForm").submit();
+    }
 
 
     // 공통 JavaScript 함수
