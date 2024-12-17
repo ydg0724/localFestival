@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Festival Map</title>
+    <title>축제어때</title>
     <style>
         body {
             font-family: Arial, sans-serif;
