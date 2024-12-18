@@ -71,6 +71,12 @@
         }
     }
     function setFestivalLocation(lat, lng, title) {
+        if (!map) {
+            console.warn("Google Map이 아직 초기화되지 않았습니다. 초기화 후 실행합니다.");
+            setTimeout(() => setFestivalLocation(lat, lng, title), 500); // 0.5초 후 재시도
+            return;
+        }
+
         if (map) {
             // 기존 마커 제거
             clearMarkers();
