@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import com.festival.jspfestival.service.FestivalService;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -71,7 +72,30 @@ public class MainController {
     }
 
 
+    @PostMapping("/routeResult")
+    public String handleSelectedTours(
+            @RequestParam(value = "selectedTours", required = false) List<String> selectedTours,
+            Model model) {
 
+        if (selectedTours == null || selectedTours.isEmpty()) {
+            System.out.println("선택된 투어가 없습니다.");
+            model.addAttribute("error", "선택된 항목이 없습니다.");
+            return "routeResult"; // 에러 메시지를 보여줄 페이지
+        }
+
+        System.out.println("선택된 투어 ID: " + selectedTours);
+
+        List<FestivalDetail> selectedTourDetails = new ArrayList<>();
+        for (String contentId : selectedTours) {
+            FestivalDetail detail = festivalService.fetchTourDetail(contentId, "");
+            if (detail != null) {
+                selectedTourDetails.add(detail);
+            }
+        }
+
+        model.addAttribute("selectedTours", selectedTourDetails);
+        return "routeResult";
+    }
 
     @Autowired
     private FestivalService FestivalService;

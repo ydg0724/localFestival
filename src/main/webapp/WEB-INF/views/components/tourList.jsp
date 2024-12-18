@@ -81,12 +81,13 @@
 </style>
 <div class="list-container">
     <h3>관광지 목록</h3>
+    <<form id="tourForm" action="routeResult" method="post">
     <ul>
         <c:forEach var="tour" items="${tours}">
             <li>
 
                 <!-- 체크박스 추가 -->
-                <input type="checkbox" class="tour-checkbox"
+                <input type="checkbox" name="selectedTours" value="${tour.contentId}"
                        data-title="${tour.title}"
                        data-mapx="${tour.mapX}"
                        data-mapy="${tour.mapY}"
@@ -117,10 +118,12 @@
             </li>
         </c:forEach>
     </ul>
+    <button type="submit">선택 항목 RouteResult로 이동</button>
+</form>
+
 </div>
 
 <script>
-    let markers = []; // 마커 배열
 
 
 
