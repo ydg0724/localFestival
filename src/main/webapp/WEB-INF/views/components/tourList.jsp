@@ -84,6 +84,15 @@
     <ul>
         <c:forEach var="tour" items="${tours}">
             <li>
+
+                <!-- 체크박스 추가 -->
+                <input type="checkbox" class="tour-checkbox"
+                       data-title="${tour.title}"
+                       data-mapx="${tour.mapX}"
+                       data-mapy="${tour.mapY}"
+                       onchange="handleCheckboxChange(this)"
+                >
+
                 <!-- 이미지 -->
                 <c:choose>
                     <c:when test="${not empty tour.firstImage}">
@@ -98,7 +107,8 @@
                 <div class="item-info">
                     <p class="item-title">
                         <a href="javascript:void(0);"
-                           onclick="fetchTourDetail('${tour.contentId}', '${tour.firstImage}')">
+                           onclick="fetchTourDetail('${tour.contentId}', '${tour.firstImage}');
+                                   selectTour('${tour.mapX}', '${tour.mapY}', '${tour.title.replace("'", "\\'")}');">
                                 ${tour.title}
                         </a>
                     </p>
@@ -110,19 +120,10 @@
 </div>
 
 <script>
-    function selectFestival(element) {
-        // 선택된 축제의 위치 정보 추출
-        const lat = parseFloat(element.getAttribute('data-lat'));
-        const lng = parseFloat(element.getAttribute('data-lng'));
-        const name = element.getAttribute('data-name');
-        console.log("DEBUG - selectFestival 함수 호출됨");
-        console.log("위도(lat):", lat);
-        console.log("경도(lng):", lng);
-        console.log("축제 이름(title):", name);
+    let markers = []; // 마커 배열
 
-        // 구글맵 함수 호출 (맵 컴포넌트로 데이터 전송)
-        updateMapLocation(lat, lng, name);
 
-    }
+
+
 </script>
 

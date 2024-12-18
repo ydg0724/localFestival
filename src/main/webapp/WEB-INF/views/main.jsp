@@ -111,7 +111,7 @@
     <jsp:include page="/WEB-INF/views/components/festivalList.jsp" />
 </div>
 <div class="clearfix"></div>
-<form if = "tourform" action="/tour" method="post">
+<form id = "tourForm" action="/tour" method="post">
     <input type="hidden" id="inputContentId" name="contentId">
     <input type="hidden" id="inputTitle" name="title">
     <input type="hidden" id="inputTel" name="tel">
