@@ -86,7 +86,10 @@
                 position: { lat: lat, lng: lng },
                 map: map,
                 title: title,
-                icon: "http://maps.google.com/mapfiles/ms/icons/red-dot.png"
+                icon: {
+                    url: "${pageContext.request.contextPath}/images/festival-marker.png", // 이미지 경로
+                    scaledSize: new google.maps.Size(32, 32) // 마커 이미지 크기 조절 (너비, 높이)
+                }
             });
 
             // 정보창 설정
@@ -223,7 +226,10 @@
             position: { lat: lat, lng: lng },
             map: map,
             title: title,
-            icon: "http://maps.google.com/mapfiles/ms/icons/red-dot.png" // 빨간색 마커
+            icon: {
+                url: "${pageContext.request.contextPath}/images/selected-tour-marker.png", // 이미지 경로
+                scaledSize: new google.maps.Size(32, 32) // 마커 이미지 크기 조절 (너비, 높이)
+            }
         });
 
         persistentMarkers.push({ marker, title });

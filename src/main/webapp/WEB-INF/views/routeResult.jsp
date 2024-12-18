@@ -136,7 +136,28 @@
             </c:forEach>
         </c:if>
     </ul>
+    <c:set var="festival" value="${selectedFestival}" />
+    <c:set var="tours" value="${selectedTours}" />
+
 </div>
 
 </body>
 </html>
+<script>
+    // 관광지 데이터를 JavaScript 객체로 변환
+    const selectedFestival = {
+        title: "${selectedFestival.title}",
+        lat: parseFloat("${selectedFestival.mapY}"),
+        lng: parseFloat("${selectedFestival.mapX}")
+    };
+
+    const selectedTours = [
+        <c:forEach var="tour" items="${selectedTours}" varStatus="status">
+        {
+            title: "${tour.title}",
+            lat: parseFloat("${tour.mapY}"),
+            lng: parseFloat("${tour.mapX}")
+        }<c:if test="${!status.last}">,</c:if>
+        </c:forEach>
+    ];
+</script>
