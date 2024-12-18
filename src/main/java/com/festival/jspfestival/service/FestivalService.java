@@ -22,7 +22,7 @@ public class FestivalService {
     private static final String FEST_DETAIL_API_URL = "http://apis.data.go.kr/B551011/KorService1/detailCommon1";
     private static final String TOUR_MAIN_API_URL = "http://apis.data.go.kr/B551011/KorService1/locationBasedList1";
 
-//    private static final String API_KEY = "";
+    private static final String API_KEY = "";
 
     public List<Festival> fetchFestivals() {
         List<Festival> festivals = new ArrayList<>();
@@ -201,7 +201,7 @@ public class FestivalService {
                     "&overviewYN=Y" +
                     "&mapinfoYN=Y" +
                     "&addrinfoYN=Y" +
-                    "firstImageYN=Y"+
+                    "&firstImageYN=Y"+
                     "&_type=json");
             System.out.println("Requesting URL: " + url);
 
