@@ -84,7 +84,7 @@
     <h3>축제 목록</h3>
     <ul>
         <c:forEach var="festival" items="${festivals}">
-            <li>
+            <li class="festival-item">
                 <c:choose>
                     <c:when test="${not empty festival.image1}">
                         <img src="${festival.image1}" alt="${festival.title}">
@@ -94,15 +94,15 @@
                     </c:otherwise>
                 </c:choose>
                 
-                <div class="item-info">
-                    <p class="item-title">
+                <div class="item-info festival-info" >
+                    <p class="item-title festival-title">
                         <a href="javascript:void(0);"
                            onclick="fetchDetail('${festival.contentId}', '${festival.addr}', '${festival.image1}');
                                    selectFestival('${festival.mapX}', '${festival.mapY}', '${festival.title.replace("'", "\\'")}');">
                                 ${festival.title}
                         </a>
                     </p>
-                    <p class="item-description">${festival.addr}</p>
+                    <p class="item-description festival-address">${festival.addr}</p>
                 </div>
             </li>
         </c:forEach>

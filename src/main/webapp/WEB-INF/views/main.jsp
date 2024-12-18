@@ -107,7 +107,13 @@
     </jsp:include>
 
 </div>
+
 <div id="festival-list">
+    <div>
+        <input type="text" id="festivalSearch" placeholder="축제 검색" onkeyup="filterFestivals()"
+               style="width: 30%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px;">
+    </div>
+
     <jsp:include page="/WEB-INF/views/components/festivalList.jsp" />
 </div>
 <div class="clearfix"></div>
@@ -138,6 +144,25 @@
 
 <script>
     let currentFestivalData = {}; // 전역 변수 선언
+
+
+    function filterFestivals() {
+        const searchInput = document.getElementById('festivalSearch').value.toLowerCase();
+        const festivals = document.querySelectorAll('#festival-list .festival-item');
+
+        festivals.forEach(festival => {
+            const title = festival.querySelector('.festival-title').innerText.toLowerCase();
+            const address = festival.querySelector('.festival-address').innerText.toLowerCase();
+
+            // 제목이나 주소에 검색어가 포함되면 보이고, 아니면 숨김
+            if (title.includes(searchInput) || address.includes(searchInput)) {
+                festival.style.display = '';
+            } else {
+                festival.style.display = 'none';
+            }
+        });
+    }
+
 
     <!-- AJAX 스크립트 -->
     function fetchDetail(contentId,addr, image) {
