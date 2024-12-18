@@ -90,7 +90,17 @@
 
 </div>
 <div id="tour-list">
-<%--    <h2>Tour 리스트</h2>--%>
+    <form id="tourForm" action="routeResult" method="post">
+        <!-- Hidden input: mainPage에서 전달된 축제 정보 -->
+        <input type="hidden" name="selectedFestival" value="${localContentId}">
+        <p>localContentId 값 확인: ${localContentId}</p>
+
+    <%--    <input type="hidden" name="selectedFestival" value="${localContentId}">--%>
+        <input type="hidden" name="festivalTitle" value="${localTitle}">
+        <input type="hidden" name="festivalMapX" value="${localMapx}">
+        <input type="hidden" name="festivalMapY" value="${localMapy}">
+
+    <%--    <h2>Tour 리스트</h2>--%>
 <%--    <c:forEach var="tour" items="${tours}">--%>
 <%--        <p>Title: ${tour.title}</p>--%>
 <%--        <p>MapX: ${tour.mapX}</p>--%>
@@ -120,6 +130,7 @@
         const festivalLat = parseFloat("${localMapy}");
         const festivalLng = parseFloat("${localMapx}");
         const festivalTitle = "${localTitle}";
+        const festivalContentId = "${localContentId}";
 
         // 값 유효성 검사
         console.log("축제 위도:", festivalLat);

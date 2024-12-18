@@ -67,15 +67,24 @@ public class MainController {
     }
     @GetMapping("/tour")
     public String getTourPage(Model model) {
+        // Flash Attribute를 가져오는지 확인
+        if (!model.containsAttribute("localContentId")) {
+            model.addAttribute("localContentId", "defaultContentId");
+        }
         model.addAttribute("googleMapsApiKey", googleMapsApiKey);
-        return "tour"; // tour.jsp 페이지로 이동
+        return "tour";
     }
 
 
     @PostMapping("/routeResult")
     public String handleSelectedTours(
             @RequestParam(value = "selectedTours", required = false) List<String> selectedTours,
+            @RequestParam(value = "selectedFestival", required = false) String selectedFestival,
             Model model) {
+        FestivalDetail festivalDetail = null;
+        if (selectedFestival != null && !selectedFestival.isEmpty()) {
+            festivalDetail = festivalService.fetchTourDetail(selectedFestival, ""); // API 호출
+        }
 
         if (selectedTours == null || selectedTours.isEmpty()) {
             System.out.println("선택된 투어가 없습니다.");
@@ -94,6 +103,8 @@ public class MainController {
         }
 
         model.addAttribute("selectedTours", selectedTourDetails);
+        model.addAttribute("selectedFestival", festivalDetail);
+
         return "routeResult";
     }
 

@@ -81,7 +81,8 @@
 </style>
 <div class="list-container">
     <h3>관광지 목록</h3>
-    <<form id="tourForm" action="routeResult" method="post">
+    <p>localContentId in tourList.jsp: ${localContentId}</p>
+
     <ul>
         <c:forEach var="tour" items="${tours}">
             <li>
@@ -119,7 +120,6 @@
         </c:forEach>
     </ul>
     <button type="submit">선택 항목 RouteResult로 이동</button>
-</form>
 
 </div>
 
