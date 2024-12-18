@@ -22,8 +22,7 @@ public class FestivalService {
     private static final String FEST_DETAIL_API_URL = "http://apis.data.go.kr/B551011/KorService1/detailCommon1";
     private static final String TOUR_MAIN_API_URL = "http://apis.data.go.kr/B551011/KorService1/locationBasedList1";
 
-    private static final String API_KEY = "";
-
+//    private static final String API_KEY = "";
 
     public List<Festival> fetchFestivals() {
         List<Festival> festivals = new ArrayList<>();
@@ -97,6 +96,7 @@ public class FestivalService {
                     "&overviewYN=Y" +
                     "&mapinfoYN=Y" +
                     "&addrinfoYN=Y" +
+                    "firstImageYN=Y"+
                     "&_type=json");
             System.out.println("Requesting URL: " + url);
 
@@ -201,6 +201,7 @@ public class FestivalService {
                     "&overviewYN=Y" +
                     "&mapinfoYN=Y" +
                     "&addrinfoYN=Y" +
+                    "firstImageYN=Y"+
                     "&_type=json");
             System.out.println("Requesting URL: " + url);
 
@@ -216,8 +217,9 @@ public class FestivalService {
 
             // JSON 데이터를 FestivalDetail 객체로 매핑
             tourDetail.setContentId(item.path("contentid").asText(""));
-            tourDetail.setFirstimage(image);
+//            tourDetail.setFirstimage(image);
             tourDetail.setTitle(item.path("title").asText(""));
+            tourDetail.setFirstimage(item.path("firstimage").asText(""));
 
             tourDetail.setMapX(item.path("mapx").asDouble(0.0));
             tourDetail.setMapY(item.path("mapy").asDouble(0.0));

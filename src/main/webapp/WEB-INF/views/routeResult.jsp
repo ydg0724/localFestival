@@ -16,8 +16,9 @@
             height: 700px;
             width: 70%;
             float: left;
-            background-color: #e0e0e0; /* 배경 색상으로 공간 표시 */
+            background-color: #e0e0e0;
         }
+
         #selected-list {
             height: 700px;
             width: 28%;
@@ -27,16 +28,21 @@
             border-radius: 8px;
             padding: 10px;
             box-sizing: border-box;
-            background-color: #f9f9f9; /* 배경 색상으로 공간 표시 */
-        }
-        .selected-list-container {
             background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 0 auto;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+
+        .selected-list-container h2 {
+            margin-top: 10px;
+            font-size: 22px;
+            color: #5F5FBD;
+        }
+
+        .selected-list-container ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
         .selected-list-container li {
             display: flex;
             align-items: center;
@@ -49,42 +55,88 @@
             transition: transform 0.2s ease-in-out;
         }
 
+        .selected-list-container li:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .selected-list-container img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            margin-right: 15px;
+            border-radius: 8px;
+        }
+
+        .item-info h3 {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin: 0;
+        }
+
+        .item-info p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #666;
+        }
     </style>
 </head>
 <body>
-<%@ include file="/WEB-INF/views/layout/header.jsp" %> <!-- 절대 경로 사용 -->
+<%@ include file="/WEB-INF/views/layout/header.jsp" %>
+
 <div id="main-map">
     <jsp:include page="/WEB-INF/views/components/googleMap.jsp">
         <jsp:param name="googleapikey" value="${googleMapsApiKey}"/>
     </jsp:include>
-
 </div>
-<div id = "selected-list" class="selected-list-container">
-    <h1>선택된 관광지 정보</h1>
+
+<div id="selected-list" class="selected-list-container">
+<%--    <h1>선택된 관광지 정보</h1>--%>
     <ul>
+        <!-- 축제 정보 표시 -->
         <c:if test="${not empty selectedFestival}">
-            <h2>축제 정보</h2>
+            <h2>선택한 축제 정보</h2>
             <li>
-                <h3>${selectedFestival.title}</h3>
-<%--                <p>위도: ${selectedFestival.mapY}, 경도: ${selectedFestival.mapX}</p>--%>
-<%--                <p>전화번호: ${selectedFestival.tel}</p>--%>
-<%--                <p>${selectedFestival.overview}</p>--%>
+                <c:choose>
+                    <c:when test="${not empty selectedFestival.firstimage}">
+                        <img src="${selectedFestival.firstimage}" alt="이미지 없음">
+                    </c:when>
+                    <c:otherwise>
+                        <img src="${pageContext.request.contextPath}/images/default-image.jpeg" alt="기본 이미지">
+                    </c:otherwise>
+                </c:choose>
+                <div class="item-info">
+                    <h3>${selectedFestival.title}</h3>
+<%--                    <p>전화번호: ${selectedFestival.tel}</p>--%>
+<%--                    <p>${selectedFestival.overview}</p>--%>
+                </div>
             </li>
         </c:if>
 
+        <!-- 선택된 관광지 목록 표시 -->
         <c:if test="${not empty selectedTours}">
             <h2>선택된 관광지 목록</h2>
             <c:forEach var="tour" items="${selectedTours}">
                 <li>
-                    <h3>${tour.title}</h3>
-<%--                    <p>위도: ${tour.mapY}, 경도: ${tour.mapX}</p>--%>
-<%--                    <p>전화번호: ${tour.tel}</p>--%>
-<%--                    <p>${tour.overview}</p>--%>
+                    <c:choose>
+                        <c:when test="${not empty tour.firstimage}">
+                            <img src="${tour.firstimage}" alt="이미지 없음">
+                        </c:when>
+                        <c:otherwise>
+                            <img src="${pageContext.request.contextPath}/images/default-image.jpeg" alt="기본 이미지">
+                        </c:otherwise>
+                    </c:choose>
+                    <div class="item-info">
+                        <h3>${tour.title}</h3>
+<%--                        <p>전화번호: ${tour.tel}</p>--%>
+<%--                        <p>${tour.overview}</p>--%>
+                    </div>
                 </li>
             </c:forEach>
         </c:if>
     </ul>
-
 </div>
+
 </body>
 </html>
