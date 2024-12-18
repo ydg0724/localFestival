@@ -39,7 +39,7 @@ public class FestivalService {
                     "&MobileApp=AppTest" +
                     "&MobileOS=ETC" +
                     "&pageNo=1" +
-                    "&numOfRows=30" +
+                    "&numOfRows=1000" +
                     "&eventStartDate=" + formattedDate + //현재 날짜 기준으로
                     "&listYN=Y" +
                     "&arrange=A" +

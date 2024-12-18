@@ -112,6 +112,9 @@
     <div>
         <input type="text" id="festivalSearch" placeholder="축제 검색" onkeyup="filterFestivals()"
                style="width: 30%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px;">
+        <input type="date" id="festivalDate" onchange="filterFestivals()"
+               style="width: 20%; padding: 10px; margin-left: 10px; border: 1px solid #ddd; border-radius: 8px;">
+
     </div>
 
     <jsp:include page="/WEB-INF/views/components/festivalList.jsp" />
@@ -148,14 +151,35 @@
 
     function filterFestivals() {
         const searchInput = document.getElementById('festivalSearch').value.toLowerCase();
+        const selectedDate = document.getElementById('festivalDate').value; // 사용자가 선택한 날짜
         const festivals = document.querySelectorAll('#festival-list .festival-item');
 
         festivals.forEach(festival => {
             const title = festival.querySelector('.festival-title').innerText.toLowerCase();
             const address = festival.querySelector('.festival-address').innerText.toLowerCase();
+            const startDateElement = festival.querySelector('.festival-start-date'); // 시작 날짜
+            const endDateElement = festival.querySelector('.festival-end-date'); // 종료 날짜
+            const rawStartDate = startDateElement ? startDateElement.innerText.trim() : null;
+            const rawEndDate = endDateElement ? endDateElement.innerText.trim() : null;
 
-            // 제목이나 주소에 검색어가 포함되면 보이고, 아니면 숨김
-            if (title.includes(searchInput) || address.includes(searchInput)) {
+            let dateMatch = true;
+
+            if (selectedDate) {
+                const selected = new Date(selectedDate); // 사용자가 입력한 날짜
+                const formattedStartDate = rawStartDate ? formatDate(rawStartDate) : null;
+                const formattedEndDate = rawEndDate ? formatDate(rawEndDate) : null;
+
+                const start = formattedStartDate ? new Date(formattedStartDate) : null;
+                const end = formattedEndDate ? new Date(formattedEndDate) : null;
+
+                console.log("비교 날짜: 선택된 날짜 =", selected, "시작 날짜 =", start, "종료 날짜 =", end); // 디버깅용 출력
+
+                // 시작일이 입력된 날짜보다 이전이고 종료일이 입력된 날짜보다 이후인지 확인
+                dateMatch = (!start || start <= selected) && (!end || selected <= end);
+            }
+
+            // 검색어 및 날짜 비교 조건 확인
+            if ((title.includes(searchInput) || address.includes(searchInput)) && dateMatch) {
                 festival.style.display = '';
             } else {
                 festival.style.display = 'none';
@@ -163,6 +187,12 @@
         });
     }
 
+
+    // 날짜 형식을 YYYYMMDD -> YYYY-MM-DD로 변환
+    function formatDate(yyyymmdd) {
+        if (!yyyymmdd || yyyymmdd.length !== 8) return null; // 값이 없거나 길이가 8이 아니면 null 반환
+        return yyyymmdd.substring(0, 4) + "-" + yyyymmdd.substring(4, 6) + "-" + yyyymmdd.substring(6, 8);
+    }
 
     <!-- AJAX 스크립트 -->
     function fetchDetail(contentId,addr, image) {

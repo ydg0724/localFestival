@@ -103,6 +103,10 @@
                         </a>
                     </p>
                     <p class="item-description festival-address">${festival.addr}</p>
+                    <p class="item-description festival-dates">
+                        <span class="festival-start-date">${festival.eventStartDate}</span> ~
+                        <span class="festival-end-date">${festival.eventEndDate}</span>
+                    </p>
                 </div>
             </li>
         </c:forEach>
