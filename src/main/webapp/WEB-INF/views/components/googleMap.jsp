@@ -23,6 +23,11 @@
 
     // 지도 초기화 함수
     function initMap() {
+
+        const festivalLat = parseFloat("<c:out value='${param.festivalLat}' />");
+        const festivalLng = parseFloat("<c:out value='${param.festivalLng}' />");
+        const festivalTitle = "<c:out value='${param.festivalTitle}' />";
+
         // 지도 초기화 (서울 기본 좌표)
         map = new google.maps.Map(document.getElementById('google-map'), {
             center: { lat: 37.5665, lng: 126.9780 },
@@ -32,10 +37,20 @@
         const currentPage = window.location.pathname;
         console.log("현재 경로:", currentPage);
 
-        if (currentPage === "/" || currentPage.includes("tour")) {
-            console.log("사용자 위치 설정 중...");
-            setUserLocation();
+        if (!isNaN(festivalLat) && !isNaN(festivalLng)) {
+            console.log("축제 위치 설정:", festivalLat, festivalLng, festivalTitle);
+            setFestivalLocation(festivalLat, festivalLng, festivalTitle);
         } else {
+            // console.log("축제 데이터 없음, 사용자 위치로 이동");
+            // setUserLocation();
+        }
+
+
+        if (currentPage === "/" ) {
+            console.log("사용자 위치 설정 중...");
+            setUserLocation(true);
+        } else {
+            setUserLocation(false);
             console.log("사용자 위치 설정 불필요.");
         }
 
@@ -50,8 +65,13 @@
 
     }
 
+    function moveMapCamera(Lat,Lng){
+        map.setCenter({ lat: Lat, lng: Lng });
+        map.setZoom(10);
+    }
+
     // 사용자 위치 설정 함수
-    function setUserLocation() {
+    function setUserLocation(type) {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 position => {
@@ -59,9 +79,10 @@
                     const userLng = position.coords.longitude;
                     console.log("사용자 위치:", userLat, userLng);
 
+                    if(type){
+                        moveMapCamera(userLat,userLng);
+                    }
                     // 지도 중심을 사용자 위치로 이동
-                    map.setCenter({ lat: userLat, lng: userLng });
-                    map.setZoom(10);
 
                     // 사용자 위치에 마커 추가
                     if (!userMarker) {
@@ -100,14 +121,17 @@
                 map: map,
                 title: title,
                 icon: {
-                    url: "${pageContext.request.contextPath}/images/festival-marker.png", // 이미지 경로
-                    scaledSize: new google.maps.Size(32, 32) // 마커 이미지 크기 조절 (너비, 높이)
+                    url: "${pageContext.request.contextPath}/images/festival-marker.png",
+                    scaledSize: new google.maps.Size(32, 32) // 마커 이미지 크기 조정
                 }
             });
 
             // 지도 중심 이동
-            map.setCenter({ lat: lat, lng: lng });
-            map.setZoom(12);
+            console.log("카메라 이동 시작: 축제 위치", { lat: lat, lng: lng });
+            map.setCenter({ lat: lat, lng: lng }); // 중심 설정
+            map.panTo({ lat: lat, lng: lng }); // 부드럽게 이동
+            map.setZoom(10); // 줌 레벨 설정
+            console.log("카메라 이동 완료: 축제 위치", { lat: lat, lng: lng });
 
             console.log("마커 추가 완료:", title, lat, lng);
         } else {

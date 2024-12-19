@@ -86,6 +86,10 @@
 <div id="main-map">
     <jsp:include page="/WEB-INF/views/components/googleMap.jsp">
         <jsp:param name="googleapikey" value="${googleMapsApiKey}"/>
+        <jsp:param name="festivalLat" value="${localMapy}" />
+        <jsp:param name="festivalLng" value="${localMapx}" />
+        <jsp:param name="festivalTitle" value="${localTitle}" />
+
     </jsp:include>
 
 </div>
