@@ -90,8 +90,8 @@
                         </c:forEach>
                     </p>
                 </div>
-                <form action="<c:url value='/routes/delete/${route.id}' />" method="post" style="margin: 0;">
-                    <button type="submit" class="delete-button">X</button>
+                <form id="deleteForm-${route.id}" action="<c:url value='/routes/delete/${route.id}' />" method="post" style="margin: 0;">
+                    <button type="button" class="delete-button" onclick="confirmDeletion(${route.id})">X</button>
                 </form>
             </div>
         </c:forEach>
@@ -99,3 +99,12 @@
 </div>
 </body>
 </html>
+<script>
+    function confirmDeletion(id) {
+
+        if (confirm(`진짜 삭제하시겠습니까?`)) {
+            // form ID를 이용해 제출
+            document.getElementById("deleteForm-" + id).submit();
+        }
+    }
+</script>
