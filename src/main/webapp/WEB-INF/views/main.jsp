@@ -28,6 +28,20 @@
             box-sizing: border-box;
             background-color: #f9f9f9; /* 배경 색상으로 공간 표시 */
         }
+
+        .sticky-bar {
+            position: sticky;
+            top: 0; /* 상단에서 고정 위치 */
+            background-color: #f9f9f9; /* 배경색으로 고정 영역 강조 */
+            z-index: 1000; /* 다른 요소 위로 오도록 설정 */
+            padding: 10px;
+            border-bottom: 1px solid #ddd; /* 구분선 추가 */
+        }
+
+        .sticky-bar input {
+            margin-bottom: 0; /* 입력 필드 간격 초기화 */
+        }
+
         #festival-details {
             display: none;
             background-color: #f9f9f9; /* 배경 색상 */
@@ -109,16 +123,16 @@
 </div>
 
 <div id="festival-list">
-    <div>
+    <div class="sticky-bar">
         <input type="text" id="festivalSearch" placeholder="축제 검색" onkeyup="filterFestivals()"
-               style="width: 54%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px;">
+               style="width: 53%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px;">
         <input type="date" id="festivalDate" onchange="filterFestivals()"
                style="width: 30%; padding: 10px; margin-left: 10px; border: 1px solid #ddd; border-radius: 8px;">
-
     </div>
 
     <jsp:include page="/WEB-INF/views/components/festivalList.jsp" />
 </div>
+
 <div class="clearfix"></div>
 <form id = "tourForm" action="/tour" method="post">
     <input type="hidden" id="inputContentId" name="contentId">

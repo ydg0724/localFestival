@@ -49,6 +49,6 @@ public class RouteController {
     @PostMapping("/delete/{id}")
     public String deleteRoute(@PathVariable int id) {
         routeService.deleteRoute(id);
-        return "redirect:/main";
+        return "redirect:/myPage";
     }
 }

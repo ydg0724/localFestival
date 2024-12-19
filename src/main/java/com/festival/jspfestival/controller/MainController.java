@@ -12,6 +12,7 @@ import com.festival.jspfestival.service.FestivalService;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import jakarta.servlet.http.HttpServletRequest;
@@ -206,21 +207,51 @@ public class MainController {
 
     @Autowired
     private RouteService routeService;
+
     @GetMapping("/myPage")
     public String myPage(HttpSession session, Model model) {
         // 세션에서 로그인된 사용자 정보 가져오기
         user loggedInUser = (user) session.getAttribute("user");
 
+        if (loggedInUser == null) {
+            return "redirect:/login"; // 비로그인 상태면 로그인 페이지로 이동
+        }
+
         // 사용자 ID를 사용하여 경로 목록 조회
         List<Route> userRoutes = routeService.getRoutesByUserId(loggedInUser.getId());
+        List<Map<String, Object>> routeDetails = new ArrayList<>();
+
+        for (Route route : userRoutes) {
+            Map<String, Object> routeDetail = new HashMap<>();
+            routeDetail.put("id", route.getId());
+            routeDetail.put("tripName", route.getTripName());
+
+            // ContentIds를 개별 ID로 분리
+            String[] contentIds = route.getContentIds().split(",");
+            List<String> contentNames = new ArrayList<>();
+
+            for (String contentId : contentIds) {
+                // 각 ContentId에 대해 축제 또는 관광지 이름 조회
+                FestivalDetail festivalDetail = festivalService.fetchFestivalDetail(contentId, "", "");
+                if (festivalDetail != null) {
+                    contentNames.add(festivalDetail.getTitle());
+                } else {
+                    contentNames.add("알 수 없는 콘텐츠");
+                }
+            }
+
+            routeDetail.put("contentNames", contentNames);
+            routeDetails.add(routeDetail);
+        }
 
         // 모델에 사용자 경로 추가
-        model.addAttribute("userRoutes", userRoutes);
+        model.addAttribute("routeDetails", routeDetails);
         model.addAttribute("username", loggedInUser.getUsername());
 
         // myPage.jsp로 이동
         return "myPage";
     }
+
 
 
 //    @GetMapping("/festivalDetail")

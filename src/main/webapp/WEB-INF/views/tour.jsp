@@ -16,8 +16,9 @@
             height: 700px;
             width: 70%;
             float: left;
-            background-color: #e0e0e0; /* 배경 색상으로 공간 표시 */
+            background-color: #e0e0e0;
         }
+
         #tour-list {
             height: 700px;
             width: 28%;
@@ -27,10 +28,42 @@
             border-radius: 8px;
             padding: 10px;
             box-sizing: border-box;
-            background-color: #f9f9f9; /* 배경 색상으로 공간 표시 */
+            background-color: #f9f9f9;
         }
+
+        .sticky-bar {
+            position: sticky;
+            top: 0; /* 상단에서 고정 위치 */
+            background-color: #f9f9f9; /* 배경색으로 고정 영역 강조 */
+            z-index: 1000; /* 다른 요소 위로 오도록 설정 */
+            padding: 10px;
+            border-bottom: 1px solid #ddd; /* 구분선 추가 */
+        }
+
+        .sticky-bar input {
+            width: 58%; /* 검색 필드 크기 */
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .sticky-bar button {
+            padding: 10px 20px;
+            background-color: #8181F7;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .sticky-bar button:hover {
+            background-color: #5F5FBD;
+        }
+
         #tour-details {
-            display: none; /* 초기 숨김 */
+            display: none;
             background-color: #f9f9f9;
             border: 1px solid #ddd;
             border-radius: 8px;
@@ -38,7 +71,6 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             margin-top: 20px;
             gap: 15px;
-            /*display: flex;*/
             flex-direction: row;
             align-items: center;
             justify-content: flex-start;
@@ -53,21 +85,21 @@
 
         #tour-details .detail-info {
             display: flex;
-            flex-direction: column; /* 정보 수직 배치 */
-            justify-content: center; /* 세로 중앙 정렬 */
-            gap: 10px; /* 각 정보 간 간격 */
+            flex-direction: column;
+            justify-content: center;
+            gap: 10px;
         }
 
         .detail-title {
-            font-size: 22px; /* 제목 크기 */
-            font-weight: bold; /* 굵게 */
-            color: #5F5FBD; /* 제목 색상 */
+            font-size: 22px;
+            font-weight: bold;
+            color: #5F5FBD;
         }
 
         #tour-details p {
-            margin: 0; /* 기본 여백 제거 */
-            font-size: 16px; /* 글자 크기 */
-            color: #333; /* 글자 색상 */
+            margin: 0;
+            font-size: 16px;
+            color: #333;
         }
 
         .clearfix::after {
@@ -76,58 +108,40 @@
             clear: both;
         }
     </style>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js">
-    </script>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-<%@ include file="/WEB-INF/views/layout/header.jsp" %> <!-- 절대 경로 사용 -->
-<%--<h1>Festival Map</h1>--%>
+<%@ include file="/WEB-INF/views/layout/header.jsp" %>
 <div id="main-map">
     <jsp:include page="/WEB-INF/views/components/googleMap.jsp">
         <jsp:param name="googleapikey" value="${googleMapsApiKey}"/>
         <jsp:param name="festivalLat" value="${localMapy}" />
         <jsp:param name="festivalLng" value="${localMapx}" />
         <jsp:param name="festivalTitle" value="${localTitle}" />
-
     </jsp:include>
-
 </div>
-<div>
-    <form id="tourForm" action="routeResult" method="post">
-        <div class="tool-bar" style="
-        position: sticky;
-        width: 28%;
-        top: 0;
-        background-color: white;
-        z-index: 1000;
-        padding: 10px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        display: flex;
-        gap: 10px;
-        align-items: center;">
-            <input type="text" id="tourSearch" placeholder="관광지 검색" onkeyup="filterTours()"
-                   style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 8px;">
 
-            <!-- Hidden input: mainPage에서 전달된 축제 정보 -->
-            <input type="hidden" name="selectedFestival" value="${localContentId}">
-            <%--        <p>localContentId 값 확인: ${localContentId}</p>--%>
-            <button type="submit" style="
-            padding: 10px 20px; background-color: #5F5FBD; color: white; border: none; border-radius: 8px; cursor: pointer;">
-                경로 설정</button>
-        </div>
+<div id="tour-list">
+    <!-- 검색 및 다음 페이지 이동 -->
+    <form id="tourSearchForm" class="sticky-bar">
+        <input type="text" id="tourSearch" placeholder="관광지 검색" onkeyup="filterTours()">
+        <button type="button" onclick="submitSearch()">다음으로 이동</button>
+    </form>
 
-        <%--    <input type="hidden" name="selectedFestival" value="${localContentId}">--%>
+    <!-- 관광지 목록을 새로운 form으로 묶음 -->
+    <form id="tourListForm" action="routeResult" method="post">
+        <input type="hidden" name="selectedFestival" value="${localContentId}">
         <input type="hidden" name="festivalTitle" value="${localTitle}">
         <input type="hidden" name="festivalMapX" value="${localMapx}">
         <input type="hidden" name="festivalMapY" value="${localMapy}">
-        <div id="tour-list">
-            <jsp:include page="/WEB-INF/views/components/tourList.jsp" />
-        </div>
 
+        <jsp:include page="/WEB-INF/views/components/tourList.jsp" />
+    </form>
 </div>
+
 <div class="clearfix"></div>
-<div id="tour-details" style="display: none;">
+
+<div id="tour-details">
     <img id="tour-detail-img" src="" alt="이미지 없음">
     <div class="detail-info">
         <p class="detail-title" id="tour-detail-title" ></p>
@@ -242,10 +256,13 @@
             }
         });
     }
+    function submitSearch() {
+        // 필요한 데이터 수집
+        const form = document.getElementById("tourListForm");
 
-
-
-
+        // 폼 제출
+        form.submit();
+    }
 
 
     // 공통 JavaScript 함수
@@ -256,4 +273,3 @@
 
 </body>
 </html>
-
