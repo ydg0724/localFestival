@@ -119,7 +119,6 @@
             </li>
         </c:forEach>
     </ul>
-    <button type="submit">선택 항목 RouteResult로 이동</button>
 
 </div>
 

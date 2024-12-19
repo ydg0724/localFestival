@@ -89,29 +89,38 @@
     </jsp:include>
 
 </div>
-<div id="tour-list">
+<div>
     <form id="tourForm" action="routeResult" method="post">
-        <input type="text" id="tourSearch" placeholder="관광지 검색" onkeyup="filterTours()"
-               style="width: 30%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px;">
+        <div class="tool-bar" style="
+        position: sticky;
+        width: 28%;
+        top: 0;
+        background-color: white;
+        z-index: 1000;
+        padding: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        display: flex;
+        gap: 10px;
+        align-items: center;">
+            <input type="text" id="tourSearch" placeholder="관광지 검색" onkeyup="filterTours()"
+                   style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 8px;">
 
-        <!-- Hidden input: mainPage에서 전달된 축제 정보 -->
-        <input type="hidden" name="selectedFestival" value="${localContentId}">
-<%--        <p>localContentId 값 확인: ${localContentId}</p>--%>
+            <!-- Hidden input: mainPage에서 전달된 축제 정보 -->
+            <input type="hidden" name="selectedFestival" value="${localContentId}">
+            <%--        <p>localContentId 값 확인: ${localContentId}</p>--%>
+            <button type="submit" style="
+            padding: 10px 20px; background-color: #5F5FBD; color: white; border: none; border-radius: 8px; cursor: pointer;">
+                경로 설정</button>
+        </div>
 
-    <%--    <input type="hidden" name="selectedFestival" value="${localContentId}">--%>
+        <%--    <input type="hidden" name="selectedFestival" value="${localContentId}">--%>
         <input type="hidden" name="festivalTitle" value="${localTitle}">
         <input type="hidden" name="festivalMapX" value="${localMapx}">
         <input type="hidden" name="festivalMapY" value="${localMapy}">
+        <div id="tour-list">
+            <jsp:include page="/WEB-INF/views/components/tourList.jsp" />
+        </div>
 
-    <%--    <h2>Tour 리스트</h2>--%>
-<%--    <c:forEach var="tour" items="${tours}">--%>
-<%--        <p>Title: ${tour.title}</p>--%>
-<%--        <p>MapX: ${tour.mapX}</p>--%>
-<%--        <p>MapY: ${tour.mapY}</p>--%>
-<%--        <hr>--%>
-<%--    </c:forEach>--%>
-
-    <jsp:include page="/WEB-INF/views/components/tourList.jsp" />
 </div>
 <div class="clearfix"></div>
 <div id="tour-details" style="display: none;">
