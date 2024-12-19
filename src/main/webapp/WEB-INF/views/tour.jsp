@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Tour Map</title>
+    <title>축제어때</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -187,7 +187,7 @@
                 $('#tour-detail-mapy').text(mapy);
                 $('#tour-detail-overview').text(overview);
 
-                $('#tour-detail-img').attr('src', (image && image.trim() !== '') ? image : '${pageContext.request.contextPath}/images/default-image.jpeg');
+                $('#tour-detail-img').attr('src', (image && image.trim() !== '') ? image : '${pageContext.request.contextPath}/images/default-image.webp');
                 // 이미지가 없을 경우 기본 이미지 설정
                 // if (response.contentId) {
                 //     $('#go-to-tour').css('display', 'inline-block'); // 버튼 보이기
@@ -210,6 +210,8 @@
 
 
 
+
+
     // 공통 JavaScript 함수
     function showFestivalDetails(festivalId) {
         // 축제 상세 정보 로드 및 표시 로직
@@ -218,3 +220,4 @@
 
 </body>
 </html>
+

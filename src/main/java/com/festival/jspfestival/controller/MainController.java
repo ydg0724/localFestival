@@ -1,8 +1,8 @@
 package com.festival.jspfestival.controller;
 
-import com.festival.jspfestival.model.Festival;
-import com.festival.jspfestival.model.FestivalDetail;
-import com.festival.jspfestival.model.Tour;
+import com.festival.jspfestival.model.*;
+import com.festival.jspfestival.service.RouteService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class MainController {
@@ -75,7 +76,6 @@ public class MainController {
         return "tour";
     }
 
-
     @PostMapping("/routeResult")
     public String handleSelectedTours(
             @RequestParam(value = "selectedTours", required = false) List<String> selectedTours,
@@ -107,6 +107,49 @@ public class MainController {
 
         return "routeResult";
     }
+
+    @PostMapping("/RouteOrder")
+    public String routeOrderPage(
+            @RequestParam(value = "selectedFestival", required = false) String selectedFestival,
+            @RequestParam(value = "selectedTours", required = false) List<String> selectedTours,
+            Model model) {
+
+        // 축제 상세 정보 가져오기
+        FestivalDetail festivalDetail = null;
+        if (selectedFestival != null && !selectedFestival.isEmpty()) {
+            festivalDetail = festivalService.fetchTourDetail(selectedFestival, ""); // API 호출
+        }
+
+        // 선택된 관광지 상세 정보 가져오기
+        List<FestivalDetail> selectedTourDetails = new ArrayList<>();
+        if (selectedTours != null && !selectedTours.isEmpty()) {
+            for (String tourId : selectedTours) {
+                FestivalDetail detail = festivalService.fetchTourDetail(tourId, "");
+                if (detail != null) {
+                    selectedTourDetails.add(detail);
+                }
+            }
+        }
+
+        // Model에 데이터 추가
+        model.addAttribute("selectedFestival", festivalDetail);
+        model.addAttribute("selectedTours", selectedTourDetails);
+
+        return "RouteOrder"; // RouteOrder.jsp 반환
+    }
+
+
+    @GetMapping("/RouteOrder")
+    public String getRouteOrderPage(Model model) {
+        // Flash Attribute를 가져와 모델로 전달
+        if (!model.containsAttribute("selectedTours")) {
+            model.addAttribute("error", "선택된 항목이 없습니다.");
+        }
+        return "RouteOrder";
+    }
+
+
+
 
     @Autowired
     private FestivalService FestivalService;
@@ -157,6 +200,24 @@ public class MainController {
         if (tourDetail.getTel() == null) tourDetail.setTel("전화번호 없음");
 
         return tourDetail; // JSON 데이터 반환
+    }
+
+    @Autowired
+    private RouteService routeService;
+    @GetMapping("/myPage")
+    public String myPage(HttpSession session, Model model) {
+        // 세션에서 로그인된 사용자 정보 가져오기
+        user loggedInUser = (user) session.getAttribute("user");
+
+        // 사용자 ID를 사용하여 경로 목록 조회
+        List<Route> userRoutes = routeService.getRoutesByUserId(loggedInUser.getId());
+
+        // 모델에 사용자 경로 추가
+        model.addAttribute("userRoutes", userRoutes);
+        model.addAttribute("username", loggedInUser.getUsername());
+
+        // myPage.jsp로 이동
+        return "myPage";
     }
 
 

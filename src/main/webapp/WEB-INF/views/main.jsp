@@ -111,9 +111,9 @@
 <div id="festival-list">
     <div>
         <input type="text" id="festivalSearch" placeholder="축제 검색" onkeyup="filterFestivals()"
-               style="width: 30%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px;">
+               style="width: 54%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px;">
         <input type="date" id="festivalDate" onchange="filterFestivals()"
-               style="width: 20%; padding: 10px; margin-left: 10px; border: 1px solid #ddd; border-radius: 8px;">
+               style="width: 30%; padding: 10px; margin-left: 10px; border: 1px solid #ddd; border-radius: 8px;">
 
     </div>
 
@@ -237,7 +237,7 @@
                 $('#detail-mapy').text(mapy);
                 $('#detail-overview').text(overview);
 
-                $('#detail-img').attr('src', image || 'default-image.jpg');// 이미지가 없을 경우 기본 이미지 설정
+                $('#detail-img').attr('src', (image && image.trim() !== '') ? image : '${pageContext.request.contextPath}/images/default-image.webp');// 이미지가 없을 경우 기본 이미지 설정
 
                 $('#festival-details').css('display', 'flex');
 

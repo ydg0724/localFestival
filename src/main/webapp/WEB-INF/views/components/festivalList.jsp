@@ -90,7 +90,7 @@
                         <img src="${festival.image1}" alt="${festival.title}">
                     </c:when>
                     <c:otherwise>
-                        <img src="${pageContext.request.contextPath}/images/default-image.jpeg">
+                        <img src="${pageContext.request.contextPath}/images/default-image.webp">
                     </c:otherwise>
                 </c:choose>
                 

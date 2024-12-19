@@ -1,4 +1,3 @@
-<%--<%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>--%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
@@ -21,6 +20,9 @@
     .header-right {
         flex: 1;
         text-align: right;
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px; /* 버튼 간격 추가 */
     }
     .header-right button {
         width: 120px;
@@ -36,23 +38,23 @@
         background-color: #5F5FBD;
     }
 </style>
+
 <div class="header">
     <!-- 왼쪽: 제목 -->
     <div class="header-left">
         <h1><a href="<c:url value='/' />">축제어때</a></h1>
     </div>
 
-    <%--<!-- 오른쪽: 로그인 버튼 -->
-    <div class="header-right">
-        <form action="<c:url value='/login' />" method="get">
-            <button type="submit">로그인/회원가입</button>
-        </form>
-    </div>--%>
     <!-- 오른쪽: 로그인/로그아웃 버튼 -->
     <div class="header-right">
         <c:choose>
             <%-- 로그인 상태라면 --%>
             <c:when test="${not empty sessionScope.user}">
+                <!-- 마이페이지 버튼 -->
+                <form action="<c:url value='/myPage' />" method="get">
+                    <button type="submit">마이페이지</button>
+                </form>
+                <!-- 로그아웃 버튼 -->
                 <form action="<c:url value='/logout' />" method="post">
                     <button type="submit">로그아웃</button>
                 </form>
@@ -65,5 +67,4 @@
             </c:otherwise>
         </c:choose>
     </div>
-
 </div>

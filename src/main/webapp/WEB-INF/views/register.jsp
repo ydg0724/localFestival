@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>여행어때:회원가입</title>
+    <title>축제어때:회원가입</title>
     <style>
         body {
             font-family: Arial, sans-serif;
