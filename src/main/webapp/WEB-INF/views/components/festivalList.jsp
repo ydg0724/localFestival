@@ -97,15 +97,18 @@
                 <div class="item-info festival-info" >
                     <p class="item-title festival-title">
                         <a href="javascript:void(0);"
-                           onclick="fetchDetail('${festival.contentId}', '${festival.addr}', '${festival.image1}');
+                           onclick="fetchDetail('${festival.contentId}', '${festival.addr}', '${festival.image1}','${festival.eventStartDate}','${festival.eventEndDate}');
                                    selectFestival('${festival.mapX}', '${festival.mapY}', '${festival.title.replace("'", "\\'")}');">
                                 ${festival.title}
                         </a>
                     </p>
                     <p class="item-description festival-address">${festival.addr}</p>
                     <p class="item-description festival-dates">
-                        <span class="festival-start-date">${festival.eventStartDate}</span> ~
-                        <span class="festival-end-date">${festival.eventEndDate}</span>
+                        <c:set var="formattedStartDate" value="${festival.eventStartDate.substring(0, 4)}-${festival.eventStartDate.substring(4, 6)}-${festival.eventStartDate.substring(6, 8)}" />
+                        <c:set var="formattedEndDate" value="${festival.eventEndDate.substring(0, 4)}-${festival.eventEndDate.substring(4, 6)}-${festival.eventEndDate.substring(6, 8)}" />
+
+                        <span class="festival-start-date">${formattedStartDate}</span> ~
+                        <span class="festival-end-date">${formattedEndDate}</span>
                     </p>
                 </div>
             </li>
@@ -134,4 +137,6 @@
         // 구글 맵 업데이트
         updateMapLocation(lat, lng, title);
     }
+
+
 </script>

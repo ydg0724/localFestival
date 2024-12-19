@@ -176,6 +176,8 @@ public class MainController {
         System.out.println("title: " + festivalDetail.getTitle());
 //        System.out.println("firstimage: " + festivalDetail.getFirstimage());
         System.out.println("tel: " + festivalDetail.getTel());
+        System.out.println("addr: " + festivalDetail.getAddr());
+
 //        System.out.println("overview: " + festivalDetail.getOverview());
         if (festivalDetail.getTitle() == null) festivalDetail.setTitle("제목 없음");
         if (festivalDetail.getTel() == null) festivalDetail.setTel("전화번호 없음");

@@ -130,8 +130,10 @@
 <div id="tour-details" style="display: none;">
     <img id="tour-detail-img" src="" alt="이미지 없음">
     <div class="detail-info">
-        <p class="detail-title" id="tour-detail-title"></p>
+        <p class="detail-title" id="tour-detail-title" ></p>
         <p>전화번호: <span id="tour-detail-tel"></span></p>
+        <p>주소: <span id="tour-detail-addr"></span></p>
+
         <p style="display: none">위도: <span id="tour-detail-mapx"></span></p>
         <p style="display: none">경도: <span id="tour-detail-mapy"></span></p>
         <p>상세 설명: <span id="tour-detail-overview"></span></p>
@@ -205,11 +207,13 @@
                 const mapx = response.mapx;
                 const mapy = response.mapy;
                 const overview = response.overview;
+                const addr = response.addr1;
                 console.log("AJAX tour응답 데이터 title :", title);
                 console.log("AJAX tour응답 데이터 tel :", tel);
                 console.log("AJAX tour응답 데이터 contentId :", contentId);
                 console.log("mapx:", mapx); // 값 확인
                 console.log("mapy:", mapy); // 값 확인
+                console.log("addr:", addr);
 
                 $('#tour-detail-contentid').text(contentId);
                 $('#tour-detail-title').text(title);
@@ -217,6 +221,7 @@
                 $('#tour-detail-mapx').text(mapx);
                 $('#tour-detail-mapy').text(mapy);
                 $('#tour-detail-overview').text(overview);
+                $('#tour-detail-addr').text(addr);
 
                 $('#tour-detail-img').attr('src', (image && image.trim() !== '') ? image : '${pageContext.request.contextPath}/images/default-image.webp');
                 // 이미지가 없을 경우 기본 이미지 설정

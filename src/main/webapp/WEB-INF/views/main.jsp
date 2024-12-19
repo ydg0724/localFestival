@@ -131,7 +131,11 @@
         <img id="detail-img" src="" alt="이미지 없음">
         <div class="detail-info">
             <p class="detail-title" id="detail-title"></p>
+            <p>주소: <span id="detail-addr"></span></p>
+
+            <p>행사 기간: <span id="detail-period"></span></p>
             <p>전화번호: <span id="detail-tel"></span></p>
+
             <p style="display: none"><span id ="detail-contentid"></span></p>
             <p style="display: none"><span id ="detail-mapx"></span></p>
             <p style="display: none"><span id ="detail-mapy"></span></p>
@@ -195,8 +199,8 @@
     }
 
     <!-- AJAX 스크립트 -->
-    function fetchDetail(contentId,addr, image) {
-        // console.log("fetchDetail 실행");
+    function fetchDetail(contentId,addr, image,startDate,endDate) {
+        console.log("fetchDetail 실행");
         $.ajax({
             url: "/fetchDetail",
             type: "GET",
@@ -204,7 +208,10 @@
             data: {
                 contentId: contentId,
                 image: image,
-                addr: addr
+                addr: addr,
+                startDate: startDate,
+                endDate: endDate
+
             },
             success: function(response) {
                 // console.log("AJAX 응답 데이터:", response);
@@ -224,6 +231,7 @@
                 const mapx = response.mapx;
                 const mapy = response.mapy;
                 const overview = response.overview;
+                const addr = response.addr1;
                 // console.log("AJAX 응답 데이터 title :", title);
                 // console.log("AJAX 응답 데이터 tel :", tel);
                 // console.log("AJAX 응답 데이터 contentId :", contentId);
@@ -236,6 +244,8 @@
                 $('#detail-mapx').text(mapx);
                 $('#detail-mapy').text(mapy);
                 $('#detail-overview').text(overview);
+                $('#detail-period').text(formatDate(startDate)+" ~ "+formatDate(endDate));
+                $('#detail-addr').text(addr);
 
                 $('#detail-img').attr('src', (image && image.trim() !== '') ? image : '${pageContext.request.contextPath}/images/default-image.webp');// 이미지가 없을 경우 기본 이미지 설정
 
