@@ -141,9 +141,9 @@ public class FestivalService {
                     "&MobileApp=AppTest" +
                     "&MobileOS=ETC" +
                     "&pageNo=1" +
-                    "&numOfRows=10" +
+                    "&numOfRows=100" +
                     "&contentTypeId=12" + //관광지만
-                    "&radius=5000" + // 거리반경(m): 5000m - max = 20000
+                    "&radius=20000" + // 거리반경(m): 5000m - max = 20000
                     "&mapX=" +mapx +
                     "&mapY=" +mapy+
                     "&listYN=Y" +

@@ -81,11 +81,11 @@
 </style>
 <div class="list-container">
     <h3>관광지 목록</h3>
-    <p>localContentId in tourList.jsp: ${localContentId}</p>
+<%--    <p>localContentId in tourList.jsp: ${localContentId}</p>--%>
 
     <ul>
         <c:forEach var="tour" items="${tours}">
-            <li>
+            <li class="tour-item">
 
                 <!-- 체크박스 추가 -->
                 <input type="checkbox" name="selectedTours" value="${tour.contentId}"
@@ -106,8 +106,8 @@
                 </c:choose>
 
                 <!-- 관광지 정보 -->
-                <div class="item-info">
-                    <p class="item-title">
+                <div class="item-info tour-info">
+                    <p class="item-title tour-title">
                         <a href="javascript:void(0);"
                            onclick="fetchTourDetail('${tour.contentId}', '${tour.firstImage}');
                                    selectTour('${tour.mapX}', '${tour.mapY}', '${tour.title.replace("'", "\\'")}');">

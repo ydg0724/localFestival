@@ -91,9 +91,12 @@
 </div>
 <div id="tour-list">
     <form id="tourForm" action="routeResult" method="post">
+        <input type="text" id="tourSearch" placeholder="관광지 검색" onkeyup="filterTours()"
+               style="width: 30%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px;">
+
         <!-- Hidden input: mainPage에서 전달된 축제 정보 -->
         <input type="hidden" name="selectedFestival" value="${localContentId}">
-        <p>localContentId 값 확인: ${localContentId}</p>
+<%--        <p>localContentId 값 확인: ${localContentId}</p>--%>
 
     <%--    <input type="hidden" name="selectedFestival" value="${localContentId}">--%>
         <input type="hidden" name="festivalTitle" value="${localTitle}">
@@ -124,6 +127,21 @@
 
 <%--    <jsp:include page="/WEB-INF/views/components/festivalDetail.jsp" />--%>
 <script>
+    function filterTours() {
+        const searchInput = document.getElementById('tourSearch').value.toLowerCase();
+        const tours = document.querySelectorAll('#tour-list .tour-item');
+
+        tours.forEach(tour => {
+            const title = tour.querySelector('.tour-title').innerText.toLowerCase();
+
+            if (title.includes(searchInput)) {
+                tour.style.display = '';
+            } else {
+                tour.style.display = 'none';
+            }
+
+        });
+    }
 
     document.addEventListener("DOMContentLoaded", () => {
         // 서버에서 전달된 축제 데이터 확인

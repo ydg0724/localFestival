@@ -134,11 +134,12 @@
             position: { lat: lat, lng: lng },
             map: map,
             title: title,
+            // label: title,
             icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png" // 파란색 마커
         });
 
         map.setCenter({ lat: lat, lng: lng });
-        map.setZoom(14);
+        map.setZoom(12);
 
         console.log("타이틀 클릭 마커 추가:", title, lat, lng);
     }
