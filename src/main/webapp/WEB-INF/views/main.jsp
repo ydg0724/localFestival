@@ -184,8 +184,8 @@
 
             if (selectedDate) {
                 const selected = new Date(selectedDate); // 사용자가 입력한 날짜
-                const formattedStartDate = rawStartDate ? formatDate(rawStartDate) : null;
-                const formattedEndDate = rawEndDate ? formatDate(rawEndDate) : null;
+                const formattedStartDate = rawStartDate ? rawStartDate : null;
+                const formattedEndDate = rawEndDate ? rawEndDate : null;
 
                 const start = formattedStartDate ? new Date(formattedStartDate) : null;
                 const end = formattedEndDate ? new Date(formattedEndDate) : null;
