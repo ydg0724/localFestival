@@ -23,22 +23,55 @@
 
     // 지도 초기화 함수
     function initMap() {
+
+        const festivalLat = parseFloat("<c:out value='${param.festivalLat}' />");
+        const festivalLng = parseFloat("<c:out value='${param.festivalLng}' />");
+        const festivalTitle = "<c:out value='${param.festivalTitle}' />";
+
         // 지도 초기화 (서울 기본 좌표)
         map = new google.maps.Map(document.getElementById('google-map'), {
             center: { lat: 37.5665, lng: 126.9780 },
             zoom: 13,
             mapId: "7dba4cf7e6926426"
         });
+        const currentPage = window.location.pathname;
+        console.log("현재 경로:", currentPage);
+
+        if (!isNaN(festivalLat) && !isNaN(festivalLng)) {
+            console.log("축제 위치 설정:", festivalLat, festivalLng, festivalTitle);
+            setFestivalLocation(festivalLat, festivalLng, festivalTitle);
+        } else {
+            // console.log("축제 데이터 없음, 사용자 위치로 이동");
+            // setUserLocation();
+        }
+
+
+        if (currentPage === "/" ) {
+            console.log("사용자 위치 설정 중...");
+            setUserLocation(true);
+        } else {
+            setUserLocation(false);
+            console.log("사용자 위치 설정 불필요.");
+        }
+
+        if (typeof window.onMapLoaded === "function") {
+            window.onMapLoaded(map);
+        }
+        document.dispatchEvent(new Event("DOMContentLoaded"));
+
 
         // 사용자 위치 설정 함수 호출 (초기화 이후 지도에 직접 설정)
-        setUserLocation();
-        document.dispatchEvent(new Event("DOMContentLoaded"));
 
 
     }
 
+    function moveMapCamera(Lat,Lng){
+        map.setCenter({ lat: Lat, lng: Lng });
+        map.setZoom(10);
+    }
+
     // 사용자 위치 설정 함수
-    function setUserLocation() {
+    function setUserLocation(type) {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 position => {
@@ -46,9 +79,10 @@
                     const userLng = position.coords.longitude;
                     console.log("사용자 위치:", userLat, userLng);
 
+                    if(type){
+                        moveMapCamera(userLat,userLng);
+                    }
                     // 지도 중심을 사용자 위치로 이동
-                    map.setCenter({ lat: userLat, lng: userLng });
-                    map.setZoom(10);
 
                     // 사용자 위치에 마커 추가
                     if (!userMarker) {
@@ -86,22 +120,18 @@
                 position: { lat: lat, lng: lng },
                 map: map,
                 title: title,
-                icon: "http://maps.google.com/mapfiles/ms/icons/red-dot.png"
-            });
-
-            // 정보창 설정
-            const infoWindow = new google.maps.InfoWindow({
-                content: `<div style="font-weight: bold;">${title}</div>`
-            });
-
-            // 마커 클릭 시 정보창 표시
-            festivalMarker.addListener("click", () => {
-                infoWindow.open(map, festivalMarker);
+                icon: {
+                    url: "${pageContext.request.contextPath}/images/festival-marker.png",
+                    scaledSize: new google.maps.Size(32, 32) // 마커 이미지 크기 조정
+                }
             });
 
             // 지도 중심 이동
-            map.setCenter({ lat: lat, lng: lng });
-            map.setZoom(12);
+            console.log("카메라 이동 시작: 축제 위치", { lat: lat, lng: lng });
+            map.setCenter({ lat: lat, lng: lng }); // 중심 설정
+            map.panTo({ lat: lat, lng: lng }); // 부드럽게 이동
+            map.setZoom(10); // 줌 레벨 설정
+            console.log("카메라 이동 완료: 축제 위치", { lat: lat, lng: lng });
 
             console.log("마커 추가 완료:", title, lat, lng);
         } else {
@@ -128,11 +158,12 @@
             position: { lat: lat, lng: lng },
             map: map,
             title: title,
+            // label: title,
             icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png" // 파란색 마커
         });
 
         map.setCenter({ lat: lat, lng: lng });
-        map.setZoom(14);
+        map.setZoom(12);
 
         console.log("타이틀 클릭 마커 추가:", title, lat, lng);
     }
@@ -169,41 +200,7 @@
             // });
         }
     }
-    <%--function updateTourMapLocation(lat, lng, name) {--%>
-    <%--    if (map) {--%>
 
-    <%--        // 기존 마커 모두 제거--%>
-    <%--        if (currentMarker) {--%>
-    <%--            currentMarker.setMap(null);--%>
-    <%--        }--%>
-
-    <%--        // 맵 중심 이동 및 줌 레벨 설정--%>
-    <%--        map.setCenter({ lat: lat, lng: lng });--%>
-    <%--        map.setZoom(14);--%>
-
-    <%--        // InfoWindow 생성--%>
-    <%--        &lt;%&ndash;const infoWindow = new google.maps.InfoWindow({&ndash;%&gt;--%>
-    <%--        &lt;%&ndash;    content: `<div style="font-size: 14px; font-weight: bold;">${name}</div>`&ndash;%&gt;--%>
-    <%--        &lt;%&ndash;});&ndash;%&gt;--%>
-
-    <%--        // 새 마커 추가--%>
-    <%--        const marker = new google.maps.Marker({--%>
-    <%--            position: { lat, lng },--%>
-    <%--            map: map,--%>
-    <%--            title: name--%>
-    <%--        });--%>
-
-    <%--        // 마커 배열에 추가--%>
-    <%--        // markers.push(marker);--%>
-
-    <%--        // // InfoWindow를 마커에 연결--%>
-    <%--        // infoWindow.open({--%>
-    <%--        //     anchor: marker,--%>
-    <%--        //     map,--%>
-    <%--        //     shouldFocus: false--%>
-    <%--        // });--%>
-    <%--    }--%>
-    <%--}--%>
     // 체크박스 이벤트 처리
     function handleCheckboxChange(checkbox) {
         const title = checkbox.getAttribute("data-title");
@@ -223,7 +220,10 @@
             position: { lat: lat, lng: lng },
             map: map,
             title: title,
-            icon: "http://maps.google.com/mapfiles/ms/icons/red-dot.png" // 빨간색 마커
+            icon: {
+                url: "${pageContext.request.contextPath}/images/selected-tour-marker.png", // 이미지 경로
+                scaledSize: new google.maps.Size(32, 32) // 마커 이미지 크기 조절 (너비, 높이)
+            }
         });
 
         persistentMarkers.push({ marker, title });
@@ -243,13 +243,27 @@
     }
 
     // 마커 추가 함수
-    function addMarker(lat, lng, title) {
+    function addMarker(lat, lng, title, color) {
+        if (!map) {
+            console.error("Map 객체가 초기화되지 않았습니다.");
+            return;
+        }
+
+        if (isNaN(lat) || isNaN(lng)) {
+            console.error(`잘못된 좌표로 마커 추가 실패: ${lat}, ${lng}`);
+            return;
+        }
+
+        console.log(`마커 추가: ${title} (${lat}, ${lng}) - 색상: ${color}`);
         const marker = new google.maps.Marker({
             position: { lat, lng },
             map: map,
-            title: title
+            title: title,
+            icon: {
+                url: "${pageContext.request.contextPath}/images/selected-tour-marker.png", // 이미지 경로
+                scaledSize: new google.maps.Size(32, 32) // 마커 이미지 크기 조절 (너비, 높이)
+            }
         });
-        markers.push(marker);
     }
 
     // 기존 마커 제거 함수

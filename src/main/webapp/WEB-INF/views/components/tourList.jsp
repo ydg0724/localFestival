@@ -78,15 +78,48 @@
         color: #8181F7;
     }
 
+    .list-container input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        margin-right: 10px;
+        cursor: pointer;
+        accent-color: #8181F7; /* 체크박스 색상 */
+    }
+
+    .list-container input[type="checkbox"]:hover {
+        transform: scale(1.1);
+    }
+
+    .list-container button {
+        display: block;
+        width: 200px;
+        padding: 10px;
+        margin: 20px auto 0; /* 버튼을 중앙에 배치 */
+        background-color: #8181F7;
+        border: none;
+        border-radius: 4px;
+        color: #fff;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s ease-in-out;
+        text-align: center;
+    }
+
+    .list-container button:hover {
+        background-color: #5F5FBD;
+        transform: scale(1.05);
+    }
+
 </style>
 <div class="list-container">
-    <h3>관광지 목록</h3>
+    <h3>주변 관광지 목록</h3>
     <ul>
         <c:forEach var="tour" items="${tours}">
-            <li>
+            <li class="tour-item">
 
                 <!-- 체크박스 추가 -->
-                <input type="checkbox" class="tour-checkbox"
+                <input type="checkbox" name="selectedTours" value="${tour.contentId}"
                        data-title="${tour.title}"
                        data-mapx="${tour.mapX}"
                        data-mapy="${tour.mapY}"
@@ -99,13 +132,13 @@
                         <img src="${tour.firstImage}" alt="${tour.title}">
                     </c:when>
                     <c:otherwise>
-                        <img src="${pageContext.request.contextPath}/images/default-image.jpeg" alt="기본 이미지">
+                        <img src="${pageContext.request.contextPath}/images/default-image.webp" alt="기본 이미지">
                     </c:otherwise>
                 </c:choose>
 
                 <!-- 관광지 정보 -->
-                <div class="item-info">
-                    <p class="item-title">
+                <div class="item-info tour-info">
+                    <p class="item-title tour-title">
                         <a href="javascript:void(0);"
                            onclick="fetchTourDetail('${tour.contentId}', '${tour.firstImage}');
                                    selectTour('${tour.mapX}', '${tour.mapY}', '${tour.title.replace("'", "\\'")}');">
@@ -117,10 +150,11 @@
             </li>
         </c:forEach>
     </ul>
+<%--    <button type="submit">다음 페이지로 이동</button>--%>
+
 </div>
 
 <script>
-    let markers = []; // 마커 배열
 
 
 

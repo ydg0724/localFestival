@@ -21,8 +21,8 @@ public class FestivalService {
     private static final String FEST_MAIN_API_URL = "https://apis.data.go.kr/B551011/KorService1/searchFestival1";
     private static final String FEST_DETAIL_API_URL = "http://apis.data.go.kr/B551011/KorService1/detailCommon1";
     private static final String TOUR_MAIN_API_URL = "http://apis.data.go.kr/B551011/KorService1/locationBasedList1";
-    private static final String API_KEY = "";
 
+//    private static final String API_KEY = "";
 
     public List<Festival> fetchFestivals() {
         List<Festival> festivals = new ArrayList<>();
@@ -39,7 +39,7 @@ public class FestivalService {
                     "&MobileApp=AppTest" +
                     "&MobileOS=ETC" +
                     "&pageNo=1" +
-                    "&numOfRows=30" +
+                    "&numOfRows=1000" +
                     "&eventStartDate=" + formattedDate + //현재 날짜 기준으로
                     "&listYN=Y" +
                     "&arrange=A" +
@@ -96,6 +96,7 @@ public class FestivalService {
                     "&overviewYN=Y" +
                     "&mapinfoYN=Y" +
                     "&addrinfoYN=Y" +
+                    "&firstImageYN=Y"+
                     "&_type=json");
             System.out.println("Requesting URL: " + url);
 
@@ -116,8 +117,15 @@ public class FestivalService {
 
             festivalDetail.setMapX(item.path("mapx").asDouble(0.0));
             festivalDetail.setMapY(item.path("mapy").asDouble(0.0));
+
+            String addr1 = item.path("addr1").asText("").trim();
+            String addr2 = item.path("addr2").asText("").trim();
+            String address = !addr2.isEmpty() ? addr1 + ", " + addr2 : addr1;
+            festivalDetail.setAddr(address);
+            System.out.println("addr!!!");
+            System.out.println(festivalDetail.getAddr());
             festivalDetail.setTel(item.path("tel").asText(""));
-            festivalDetail.setAddr(addr);
+//            festivalDetail.setAddr(addr);
             festivalDetail.setOverview(item.path("overview").asText(""));
 
         } catch (Exception e) {
@@ -140,9 +148,9 @@ public class FestivalService {
                     "&MobileApp=AppTest" +
                     "&MobileOS=ETC" +
                     "&pageNo=1" +
-                    "&numOfRows=10" +
+                    "&numOfRows=100" +
                     "&contentTypeId=12" + //관광지만
-                    "&radius=5000" + // 거리반경(m): 5000m - max = 20000
+                    "&radius=20000" + // 거리반경(m): 5000m - max = 20000
                     "&mapX=" +mapx +
                     "&mapY=" +mapy+
                     "&listYN=Y" +
@@ -200,6 +208,7 @@ public class FestivalService {
                     "&overviewYN=Y" +
                     "&mapinfoYN=Y" +
                     "&addrinfoYN=Y" +
+                    "&firstImageYN=Y"+
                     "&_type=json");
             System.out.println("Requesting URL: " + url);
 
@@ -215,13 +224,15 @@ public class FestivalService {
 
             // JSON 데이터를 FestivalDetail 객체로 매핑
             tourDetail.setContentId(item.path("contentid").asText(""));
-            tourDetail.setFirstimage(image);
+//            tourDetail.setFirstimage(image);
             tourDetail.setTitle(item.path("title").asText(""));
+            tourDetail.setFirstimage(item.path("firstimage").asText(""));
 
             tourDetail.setMapX(item.path("mapx").asDouble(0.0));
             tourDetail.setMapY(item.path("mapy").asDouble(0.0));
             tourDetail.setTel(item.path("tel").asText(""));
             tourDetail.setOverview(item.path("overview").asText(""));
+            tourDetail.setAddr(item.path("addr1").asText(""));
 
         } catch (Exception e) {
             System.err.println("API 호출 중 오류 발생:");

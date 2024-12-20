@@ -1,28 +1,31 @@
 package com.festival.jspfestival.model;
 
 import jakarta.persistence.*;
-import java.util.List;
 
 @Entity
-@Table(name = "Route") //Route 테이블 생성
+@Table(name = "Route")
 public class Route {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(name = "trip_name", nullable = false)
+    private String tripName; // 경로 제목
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private user user;
 
     @Column(name = "contentid", nullable = false)
-    private String contentIds; // 콤마(,)로 구분된 contentid 목록을 저장
+    private String contentIds; // 콤마(,)로 구분된 contentid 목록
 
     // 기본 생성자
     public Route() {}
 
     // 생성자
-    public Route(user user, String contentIds) {
+    public Route(String tripName, user user, String contentIds) {
+        this.tripName = tripName;
         this.user = user;
         this.contentIds = contentIds;
     }
@@ -34,6 +37,14 @@ public class Route {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getTripName() {
+        return tripName;
+    }
+
+    public void setTripName(String tripName) {
+        this.tripName = tripName;
     }
 
     public user getUser() {

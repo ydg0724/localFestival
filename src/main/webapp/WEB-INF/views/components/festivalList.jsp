@@ -84,25 +84,32 @@
     <h3>축제 목록</h3>
     <ul>
         <c:forEach var="festival" items="${festivals}">
-            <li>
+            <li class="festival-item">
                 <c:choose>
                     <c:when test="${not empty festival.image1}">
                         <img src="${festival.image1}" alt="${festival.title}">
                     </c:when>
                     <c:otherwise>
-                        <img src="${pageContext.request.contextPath}/images/default-image.jpeg">
+                        <img src="${pageContext.request.contextPath}/images/default-image.webp">
                     </c:otherwise>
                 </c:choose>
                 
-                <div class="item-info">
-                    <p class="item-title">
+                <div class="item-info festival-info" >
+                    <p class="item-title festival-title">
                         <a href="javascript:void(0);"
-                           onclick="fetchDetail('${festival.contentId}', '${festival.addr}', '${festival.image1}');
+                           onclick="fetchDetail('${festival.contentId}', '${festival.addr}', '${festival.image1}','${festival.eventStartDate}','${festival.eventEndDate}');
                                    selectFestival('${festival.mapX}', '${festival.mapY}', '${festival.title.replace("'", "\\'")}');">
                                 ${festival.title}
                         </a>
                     </p>
-                    <p class="item-description">${festival.addr}</p>
+                    <p class="item-description festival-address">${festival.addr}</p>
+                    <p class="item-description festival-dates">
+                        <c:set var="formattedStartDate" value="${festival.eventStartDate.substring(0, 4)}-${festival.eventStartDate.substring(4, 6)}-${festival.eventStartDate.substring(6, 8)}" />
+                        <c:set var="formattedEndDate" value="${festival.eventEndDate.substring(0, 4)}-${festival.eventEndDate.substring(4, 6)}-${festival.eventEndDate.substring(6, 8)}" />
+
+                        <span class="festival-start-date">${formattedStartDate}</span> ~
+                        <span class="festival-end-date">${formattedEndDate}</span>
+                    </p>
                 </div>
             </li>
         </c:forEach>
@@ -130,4 +137,6 @@
         // 구글 맵 업데이트
         updateMapLocation(lat, lng, title);
     }
+
+
 </script>
